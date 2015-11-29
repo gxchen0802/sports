@@ -13,12 +13,18 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+    return View::make('hello');
 });
 
 Route::get('about', function()
 {
-	return View::make('pages.about'); // return View('pages.about');
+    return View::make('pages.about'); // return View('pages.about');
 });
 
 Route::resource('trainings', 'TrainingsController');
+Route::put('trainings', 'TrainingsController@update');
+
+Route::resource('trainings/{training_id}/attendees', 'TrainingsAttendeesController');
+
+Route::post('register', 'UsersController@register');
+Route::post('login', 'UsersController@login');

@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return array(
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'Asia/Shanghai',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,8 @@ return array(
 	|
 	*/
 
-	'key' => 'lbvhpge8JZh7BnJL0V89KRqpqX0tcT7P',
+	// 'key' => 'lbvhpge8JZh7BnJL0V89KRqpqX0tcT7P',
+	'key' => '4f0e473930d604e4T1c6d530G139d437',  // replace the default key
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 

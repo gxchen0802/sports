@@ -1,9 +1,7 @@
 <?php
 
-class TrainingsController extends Controller {
+class UsersController extends Controller {
 
-
-    // protected $layout = 'layouts.default';
 
     public function __construct()
     {
@@ -13,19 +11,29 @@ class TrainingsController extends Controller {
 
     public function index()
     {
-        return Trainings::all();
+        return User::all();
     }
 
 
+    public function register()
+    {
+
+    }
+
+    public function login()
+    {
+        
+    }
+
     public function store()
     {
-        Trainings::create(['title' => 'test title', 'content' => 'test content']);
+        User::create(['email' => 'test@email.com', 'username' => 'test username']);
     }
 
 
     public function update()
     {
-        Trainings::where('id', 2)->update(['title' => 'test title 2']);
+        // User::where('id', 2)->update(['title' => 'test title 2']);
     }
 
 
