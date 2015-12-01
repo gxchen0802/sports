@@ -14,9 +14,67 @@ class TrainingsAttendeesController extends Controller {
 
     public function index()
     {
-        return TrainingsAttendees::all();
+        $records = TrainingsAttendees::join('trainings', 'trainings_attendees.training_id', '=', 'trainings.id')->select(
+            'trainings_attendees.id', 
+            'trainings_attendees.worker_id', 
+            'trainings_attendees.status', 
+            'trainings.title'
+            // 'trainings.score'
+            )->get();
+
+        $data = [];
+
+        $data['records'] = $records;
+
+        return View::make('trainingsattendees.index', $data);
     }
 
+
+    public function approve($id)
+    {
+        // Auth::admin
+
+        $record = TrainingsAttendees::find($id);
+
+        if ($record->status == 'auditing')
+        {
+            $training = Trainings::find($record->training_id);
+
+            Workers::where('worker_id', $record->worker_id)->increment('accumulated_scores', $training->score);
+
+            TrainingsAttendees::where('id', $id)->update(['status' => 'approved']);
+
+            $message = 'Operation Successful';
+        }
+        else
+        {
+            $message = 'Already audited!';
+        }
+
+        return Redirect::back()->with('message', $message);
+    }
+
+    public function disapprove($id)
+    {
+        // Auth::admin
+
+        $record = TrainingsAttendees::find($id);
+
+        if ($record->status == 'auditing')
+        {
+            Trainings::where('id', $record->training_id)->increment('seats_left', 1);
+
+            TrainingsAttendees::where('id', $id)->update(['status' => 'disapproved']);
+
+            $message = 'Operation Successful';
+        }
+        else
+        {
+            $message = 'Already audited!';
+        }
+
+        return Redirect::back()->with('message', $message);
+    }
 
     public function store($training_id)
     {

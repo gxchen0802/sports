@@ -21,10 +21,18 @@ Route::get('about', function()
     return View::make('pages.about'); // return View('pages.about');
 });
 
-Route::resource('trainings', 'TrainingsController');
+Route::get('trainings/{training_id}', 'TrainingsController@show');
 Route::put('trainings', 'TrainingsController@update');
 
-Route::resource('trainings/{training_id}/attendees', 'TrainingsAttendeesController');
+Route::get('trainings_attendees/list', 'TrainingsAttendeesController@index');
+Route::post('trainings/{training_id}/attendees', 'TrainingsAttendeesController@store');
+
+Route::get('trainings_attendees/{id}/approve', 'TrainingsAttendeesController@approve');
+Route::get('trainings_attendees/{id}/disapprove', 'TrainingsAttendeesController@disapprove');
+
+// search:
+Route::get('search/attendees/worker_id/{worker_id}', 'SearchController@show');
+Route::post('search/attendees/worker_id/{worker_id}', 'SearchController@attendees');
 
 Route::post('register', 'UsersController@register');
 Route::post('login', 'UsersController@login');

@@ -11,16 +11,16 @@ class TrainingsController extends Controller {
     }
 
 
-    public function index()
-    {
-        return Trainings::all();
-    }
+    // public function index()
+    // {
+    //     return Trainings::all();
+    // }
 
 
-    public function store()
-    {
-        Trainings::create(['title' => 'test title', 'content' => 'test content']);
-    }
+    // public function store()
+    // {
+    //     Trainings::create(['title' => 'test title', 'content' => 'test content']);
+    // }
 
 
     public function update()
