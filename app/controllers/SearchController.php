@@ -27,7 +27,7 @@ class SearchController extends Controller {
 
         $data = ['worker_id' => $worker_id];
 
-        return View::make('search.show', $data); // return View('pages.about');
+        return View::make('cms.search.show', $data); // return View('pages.about');
     }
 
     public function attendees($worker_id)

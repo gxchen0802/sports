@@ -18,7 +18,9 @@ class TrainingsAttendeesController extends Controller {
             'trainings_attendees.id', 
             'trainings_attendees.worker_id', 
             'trainings_attendees.status', 
-            'trainings.title'
+            'trainings.title',
+            'trainings.content',
+            'trainings.date'
             // 'trainings.score'
             )->get();
 
@@ -26,7 +28,7 @@ class TrainingsAttendeesController extends Controller {
 
         $data['records'] = $records;
 
-        return View::make('trainingsattendees.index', $data);
+        return View::make('cms.trainingsattendees.index', $data);
     }
 
 
@@ -81,25 +83,28 @@ class TrainingsAttendeesController extends Controller {
         if ( ! $this->worker_id) 
         {
             // Check for flash data :http://www.golaravel.com/laravel/docs/4.2/requests/
-            return Redirect::to("trainings/{$training_id}")->with('message', 'Needs worker_id!');
+            return Redirect::to("trainings/{$training_id}?error=需要工号！");
         }
 
         if ( ! Workers::where('worker_id', $this->worker_id)->first())
         {
-            return Redirect::to("trainings/{$training_id}")->with('message', 'No such worker_id found!');
+            return Redirect::to("trainings/{$training_id}?error=工号 {$this->worker_id} 不存在!");
         }
 
-        $record = TrainingsAttendees::firstOrNew([
+        $history = TrainingsAttendees::where('worker_id', $this->worker_id)->where('training_id', $training_id)->first();
+
+        if ($history) 
+            return Redirect::to("trainings/{$training_id}?error={$this->worker_id} 已经注册此培训!");
+
+        TrainingsAttendees::create([
             'worker_id'   => $this->worker_id, 
             'training_id' => $training_id,
             ]);
 
-        $record->save();
-
         Trainings::where('id', $training_id)->decrement('seats_left');
 
         // Flash Data : http://www.golaravel.com/laravel/docs/4.2/responses/#redirects
-        return Redirect::to('trainings')->with('message', 'register success!');
+        return Redirect::to("trainings/{$training_id}?success=注册成功")->with('message', 'register success!');
     }
 
 }

@@ -1,13 +1,13 @@
 <?php
 
-class Trainings extends Eloquent {
+class LocationsRent extends Eloquent {
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'trainings';
+    protected $table = 'locations_rent';
 
 
     /**
@@ -18,8 +18,8 @@ class Trainings extends Eloquent {
     protected $guarded = [];
 
 
-    public function scopeNotDeleted($query)
+    public function scopeApproved($query)
     {
-        return $query->where('status', '!=', 'deleted');
+        return $query->where('status', 'approved');
     }
 }
