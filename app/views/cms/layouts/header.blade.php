@@ -25,7 +25,7 @@
                 <li><a href="/locations">列表</a></li>
                 <li><a href="/locations/create">创建</a></li>
                 <li role="separator" class="divider"></li>
-                <li class="dropdown-header">租用记录</li>
+                <li><a href="/locations_rent/search">查询预约记录</a></li>
               </ul>
             </li>
           </ul>

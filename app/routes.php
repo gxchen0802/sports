@@ -47,5 +47,13 @@ Route::post('login', 'UsersController@login');
 Route::get('locations', 'LocationsController@index');
 Route::post('locations', 'LocationsController@store');
 Route::get('locations/{id}/create', 'LocationsController@create');
+Route::post('locations/{id}/rent', 'LocationsController@rent');
+Route::get('locations_rent/search', 'LocationsController@searchForm');
+Route::post('locations_rent/search', 'LocationsController@search');
+
+Route::get('locations_rent/audit', 'LocationsController@audit');
+Route::get('locations_rent/{id}/approve', 'LocationsController@approve');
+Route::get('locations_rent/{id}/disapprove', 'LocationsController@disapprove');
+
 Route::get('locations/{id}', 'LocationsController@show');
 Route::get('locations/{id}/delete', 'LocationsController@destroy');
