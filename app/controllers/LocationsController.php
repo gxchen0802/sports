@@ -5,7 +5,7 @@ class LocationsController extends Controller {
 
     public function __construct()
     {
-        $this->beforeFilter('csrf', ['only' => ['rent', 'search']]);   
+        $this->beforeFilter('csrf', ['only' => ['store', 'update', 'rent', 'search']]);   
     }
 
 
@@ -16,6 +16,62 @@ class LocationsController extends Controller {
         $data = ['locations' => $locations];
 
         return View::make('cms.locations.index', $data);
+    }
+
+
+    public function create()
+    {
+        return View::make('cms.locations.create');
+    }
+
+
+    public function store()
+    {
+        try 
+        {
+            Locations::create([
+                'name'   => Input::get('name'),
+                'seats'  => Input::get('seats'),
+                ]);
+        } 
+        catch (Exception $e) 
+        {
+            Log::error('[Location store] '.$e->getMessage());
+
+            return Redirect::to("locations/create?error=参数有误!");
+        }
+
+        return Redirect::to("locations/create?success=创建成功");
+    }
+
+
+    public function edit($id)
+    {
+        $location = Locations::find($id);
+
+        $data = ['location' => $location];
+
+        return View::make('cms.locations.edit', $data);
+    }
+
+
+    public function update($id)
+    {
+        try 
+        {
+            Locations::where('id', $id)->update([
+                'name'  => Input::get('name'),
+                'seats' => Input::get('seats'),
+                ]);
+        } 
+        catch (Exception $e) 
+        {
+            Log::error('[Location update] '.$e->getMessage());
+
+            return Redirect::to("locations/{$id}/edit?error=参数有误!");
+        }
+
+        return Redirect::to("locations/{$id}/edit?success=编辑成功");
     }
 
 
@@ -89,12 +145,7 @@ class LocationsController extends Controller {
         return Redirect::to("locations_rent/audit?success=审核不通过！");
     }
 
-    // public function create($location_id)
-    // {
-    //     $data = ['location_id' => $location_id];
 
-    //     return View::make('cms.locations.create', $data);
-    // }
 
 
     public function rent($location_id)
@@ -125,11 +176,6 @@ class LocationsController extends Controller {
         return Redirect::to("locations/{$location_id}?success=请求已提交，等待审核中");
     }
 
-
-    public function update()
-    {
-        Trainings::where('id', 2)->update(['title' => 'test title 2']);
-    }
 
     public function destroy($id)
     {

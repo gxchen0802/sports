@@ -6,7 +6,7 @@ class TrainingsController extends Controller {
 
     public function __construct()
     {
-        $this->beforeFilter('csrf', ['only' => []]);   
+        $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
     }
 
 
@@ -31,7 +31,8 @@ class TrainingsController extends Controller {
             Trainings::create([
                 'title'      => Input::get('title'),
                 'content'    => Input::get('content'),
-                'date'       => date('Y-m-d H:i:s', strtotime(Input::get('date'))),
+                'date'       => date('Y-m-d', strtotime(Input::get('date'))),
+                'time'       => date('H:i:s', strtotime(Input::get('time'))),
                 'speaker'    => Input::get('speaker'),
                 'location'   => Input::get('location'),
                 'seats'      => Input::get('seats'),
@@ -50,9 +51,39 @@ class TrainingsController extends Controller {
     }
 
 
-    public function update()
+    public function edit($id)
     {
-        Trainings::where('id', 2)->update(['title' => 'test title 2']);
+        $training = Trainings::find($id);
+
+        $data = ['training' => $training];
+
+        return View::make('cms.trainings.edit', $data);
+    }
+
+    public function update($id)
+    {
+        try 
+        {
+            Trainings::where('id', $id)->update([
+                'title'      => Input::get('title'),
+                'content'    => Input::get('content'),
+                'date'       => date('Y-m-d', strtotime(Input::get('date'))),
+                'time'       => date('H:i:s', strtotime(Input::get('time'))),
+                'speaker'    => Input::get('speaker'),
+                'location'   => Input::get('location'),
+                'seats'      => Input::get('seats'),
+                'seats_left' => Input::get('seats'),
+                'score'      => Input::get('score')
+                ]);
+        } 
+        catch (Exception $e) 
+        {
+            Log::error('[Create Trainings] '.$e->getMessage());
+
+            return Redirect::to("trainings/{$id}/edit?error=参数有误!");
+        }
+
+        return Redirect::to("trainings/{$id}/edit?success=创建成功");
     }
 
 

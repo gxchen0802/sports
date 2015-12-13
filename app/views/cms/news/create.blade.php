@@ -1,0 +1,62 @@
+@extends('cms.layouts.default')
+
+@include('cms.news.sidebar')
+
+@section('content')
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+          @include('cms.layouts.notice')
+
+          <h2 class="sub-header">创建新闻</h2>
+
+        {{ Form::open(array('action' => array('NewsController@store'), 'class' => 'form-horizontal')) }}
+
+            <div class="form-group">
+              <label for="title" class="col-sm-2 control-label">标题</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" name="title" placeholder="标题">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="author" class="col-sm-2 control-label">作者</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" name="author" placeholder="作者">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="date" class="col-sm-2 control-label">日期</label>
+              <div class="col-sm-6">
+                <input type="date" class="form-control" name="date" placeholder="作者" value="{{ date('Y-m-d') }}">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="content" class="col-sm-2 control-label">内容</label>
+              <div class="col-sm-10">
+                <!-- 加载编辑器的容器 -->
+                <script id="container" name="content" type="text/plain">
+                    新闻内容
+                </script>
+                <!-- 配置文件 -->
+                <script type="text/javascript" src="/js/rte/ueditor.config.js"></script>
+                <!-- 编辑器源码文件 -->
+                <script type="text/javascript" src="/js/rte/ueditor.all.js"></script>
+                <!-- 实例化编辑器 -->
+                <script type="text/javascript">
+                    var ue = UE.getEditor('container');
+                </script>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">提交</button>
+              </div>
+            </div>
+
+          {{ Form::close() }}
+
+@stop

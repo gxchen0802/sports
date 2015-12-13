@@ -28,6 +28,13 @@
                 <li><a href="/locations_rent/search">查询预约记录</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">新闻 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/cms/news">列表</a></li>
+                <li><a href="/cms/news/create">创建新闻</a></li>
+              </ul>
+            </li>
           </ul>
        
         </div>

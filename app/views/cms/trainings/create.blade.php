@@ -31,9 +31,16 @@
             </div>
 
             <div class="form-group">
-              {{Form::label('日期', '日期', array('class' => 'col-sm-2 control-label'))}}
+              <label for="date" class="col-sm-2 control-label">日期</label>
               <div class="col-sm-6">
-                {{Form::text('date', '', array('class' => 'form-control', 'placeholder' => '日期'))}}            
+                <input type="date" class="form-control" name="date" placeholder="日期">
+              </div>
+            </div> 
+
+            <div class="form-group">
+              <label for="time" class="col-sm-2 control-label">时间</label>
+              <div class="col-sm-6">
+                <input type="time" class="form-control" name="time" placeholder="时间">
               </div>
             </div> 
 

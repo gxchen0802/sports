@@ -1,38 +1,39 @@
-@extends('layouts.default')
+@extends('cms.layouts.default')
+
+@include('cms.locations.sidebar')
+
 @section('content')
 
-    MESSAGE: {{ Session::get('message') }}
 
-    {{ Form::open(array('action' => array('LocationsController@store'))) }}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <!-- <h1 class="page-header"></h1> -->
 
-        {{Form::hidden('location_id', $location_id)}}
+          @include('cms.layouts.notice')
 
-        {{Form::label('start_date', '开始日期', array('class' => 'start_date'))}}
-        {{Form::text('start_date')}}
+          <h2 class="sub-header">创建场地</h2>
 
-        {{Form::label('start_time', '开始时间', array('class' => 'start_time'))}}
-        {{Form::text('start_time')}}
+        {{ Form::open(array('action' => array('LocationsController@store'), 'class' => 'form-horizontal')) }}
 
-        {{Form::label('end_time', '结束时间', array('class' => 'end_time'))}}
-        {{Form::text('end_time')}}
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">名称</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" name="name" placeholder="名称">
+              </div>
+            </div>
 
-        {{Form::label('attendees', '规模', array('class' => 'attendees'))}}
-        {{Form::text('attendees')}}
+            <div class="form-group">
+              <label for="seats" class="col-sm-2 control-label">规模（人数）</label>
+              <div class="col-sm-6">
+                <input type="number" class="form-control" name="seats" placeholder="规模（人数）">
+              </div>
+            </div>
 
-        {{Form::label('department', '租用部门', array('class' => 'department'))}}
-        {{Form::text('department')}}
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">提交</button>
+              </div>
+            </div>
 
-        {{Form::label('renter', '租用人', array('class' => 'renter'))}}
-        {{Form::text('renter')}}
-
-        {{Form::label('event', '用途', array('class' => 'event'))}}
-        {{Form::text('event')}}
-
-        {{Form::label('comment', '备注', array('class' => 'comment'))}}
-        {{Form::text('comment')}}
-
-        {{Form::submit('Click Me!')}}
-
-    {{ Form::close() }}
+          {{ Form::close() }}
 
 @stop
