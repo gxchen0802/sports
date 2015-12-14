@@ -59,7 +59,7 @@ Route::get('locations_rent/{id}/disapprove', 'LocationsController@disapprove');
 Route::get('locations/{id}', 'LocationsController@show');
 Route::get('locations/{id}/delete', 'LocationsController@destroy');
 
-## News
+## Articles:
 Route::get('cms/news', 'NewsController@index');
 Route::get('/news/{id}', 'NewsController@show');
 Route::get('cms/news/create', 'NewsController@create');
@@ -67,3 +67,10 @@ Route::post('cms/news/create', 'NewsController@store');
 Route::get('cms/news/edit', 'NewsController@edit');
 Route::post('cms/news/update', 'NewsController@update');
 Route::get('cms/news/{id}/delete', 'NewsController@destroy');
+
+## Categories:
+Route::get('cms/categories', 'CategoriesController@index');
+Route::get('cms/1st_categories/create', 'CategoriesController@createParent');
+Route::get('cms/2nd_categories/create', 'CategoriesController@createChild');
+Route::post('cms/1st_categories/create', 'CategoriesController@storeParent');
+Route::post('cms/2nd_categories/create', 'CategoriesController@storeChild');

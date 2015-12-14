@@ -1,10 +1,10 @@
 <?php
 
-class NewsController extends Controller {
+class NewsController extends BaseController {
 
     public function __construct()
     {
-        $this->beforeFilter('csrf', ['only' => []]);   
+        $this->beforeFilter('csrf', ['only' => ['store']]);   
     }
 
 
@@ -31,24 +31,29 @@ class NewsController extends Controller {
         return View::make('cms.news.create');
     }
 
+
     public function store()
     {
-        // try 
-        // {
-            News::create([
-                'title'      => Input::get('title'),
-                'content'    => Input::get('content'),
-                'date'       => date('Y-m-d', strtotime(Input::get('date'))),
-                'author'    => Input::get('author'),
-                'document'   => Input::get('document'),
-                ]);
-        // } 
-        // catch (Exception $e) 
-        // {
-        //     Log::error('[Create News] '.$e->getMessage());
+        $upload_document = $this->uploadDocument();
 
-        //     return Redirect::to("cms/news/create?error=参数有误!");
-        // }
+        if ( ! $upload_document) return Redirect::to("cms/news/create?error=无效的文件");
+
+        try 
+        {
+            News::create([
+                'title'    => Input::get('title'),
+                'content'  => Input::get('content'),
+                'date'     => date('Y-m-d', strtotime(Input::get('date'))),
+                'author'   => Input::get('author'),
+                'document' => $upload_document,
+                ]);
+        } 
+        catch (Exception $e) 
+        {
+            Log::error('[Create News] '.$e->getMessage());
+
+            return Redirect::to("cms/news/create?error=参数有误!");
+        }
 
         return Redirect::to("cms/news/create?success=创建成功");
     }

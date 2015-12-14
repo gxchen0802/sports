@@ -8,9 +8,9 @@
 
           @include('cms.layouts.notice')
 
-          <h2 class="sub-header">创建新闻</h2>
+          <h2 class="sub-header">创建文章</h2>
 
-        {{ Form::open(array('action' => array('NewsController@store'), 'class' => 'form-horizontal')) }}
+        {{ Form::open(array('action' => array('NewsController@store'), 'class' => 'form-horizontal', 'files' => true)) }}
 
             <div class="form-group">
               <label for="title" class="col-sm-2 control-label">标题</label>
@@ -38,7 +38,7 @@
               <div class="col-sm-10">
                 <!-- 加载编辑器的容器 -->
                 <script id="container" name="content" type="text/plain">
-                    新闻内容
+                    文章内容
                 </script>
                 <!-- 配置文件 -->
                 <script type="text/javascript" src="/js/rte/ueditor.config.js"></script>
@@ -48,6 +48,13 @@
                 <script type="text/javascript">
                     var ue = UE.getEditor('container');
                 </script>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="document" class="col-sm-2 control-label">附件（5MB）</label>
+              <div class="col-sm-6">
+                <input type="file" class="form-control" name="document" placeholder="附件">
               </div>
             </div>
 
