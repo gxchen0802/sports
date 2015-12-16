@@ -4,7 +4,7 @@
         <!-- 导航菜单 -->
         <div class="subnav mt20">
             <div>
-                你所在的位置：<a href="#">中心简介</a> > 中心概况
+                你所在的位置：<a href="/category/{{ $category->id }}">{{ $category->name }}</a> > {{ $subcategory->name }}
             </div>
         </div>
         <!-- centre  -->
@@ -18,6 +18,13 @@
                 <div class="d-text">
                 {{ $record->content }}
                 </div>
+
+                @if ($record->document)
+                    <div class="d-btn">
+                        {{ link_to_asset($record->document, '下载附件', $attributes = array('class' => "btn btn-blue mt30"), $secure = null) }}
+                    </div>
+                @endif
+                
                 <div class="d-btn">
                     <a href="#"  class="btn btn-red mt30">立即报名</a>
                 </div>

@@ -10,12 +10,12 @@
 
           <h2 class="sub-header">创建一级栏目</h2>
 
-        {{ Form::open(array('action' => array('CategoriesController@storeParent'), 'class' => 'form-horizontal')) }}
+        {{ Form::open(array('action' => array('CategoriesController@store'), 'class' => 'form-horizontal')) }}
 
             <div class="form-group">
-              <label for="parent" class="col-sm-2 control-label">一级栏目</label>
+              <label for="name" class="col-sm-2 control-label">一级栏目</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" name="parent" placeholder="一级栏目">
+                <input type="text" class="form-control" name="name" placeholder="一级栏目">
               </div>
             </div>
 

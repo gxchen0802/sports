@@ -26,7 +26,7 @@
                   <td>{{ $record->title }}</td>
                   <td>{{ $record->date }}</td>
                   <td>{{ $record->author }}</td>
-                  <td>{{ $record->document }}</td>
+                  <td>{{ $record->document ? link_to_asset($record->document, '下载', $attributes = array(), $secure = null) : ''}}</td>
                   <td>
                     <a href="/news/{{ $record->id }}" target="_blank">
                       <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>

@@ -60,17 +60,26 @@ Route::get('locations/{id}', 'LocationsController@show');
 Route::get('locations/{id}/delete', 'LocationsController@destroy');
 
 ## Articles:
-Route::get('cms/news', 'NewsController@index');
 Route::get('/news/{id}', 'NewsController@show');
+Route::get('cms/news', 'NewsController@index');
 Route::get('cms/news/create', 'NewsController@create');
 Route::post('cms/news/create', 'NewsController@store');
-Route::get('cms/news/edit', 'NewsController@edit');
-Route::post('cms/news/update', 'NewsController@update');
+Route::get('cms/news/{id}/edit', 'NewsController@edit');
+Route::post('cms/news/{id}/update', 'NewsController@update');
 Route::get('cms/news/{id}/delete', 'NewsController@destroy');
 
 ## Categories:
 Route::get('cms/categories', 'CategoriesController@index');
-Route::get('cms/1st_categories/create', 'CategoriesController@createParent');
-Route::get('cms/2nd_categories/create', 'CategoriesController@createChild');
-Route::post('cms/1st_categories/create', 'CategoriesController@storeParent');
-Route::post('cms/2nd_categories/create', 'CategoriesController@storeChild');
+Route::get('cms/categories/create', 'CategoriesController@create');
+Route::post('cms/categories', 'CategoriesController@store');
+Route::get('cms/categories/{id}/edit', 'CategoriesController@edit');
+Route::post('cms/categories/{id}/update', 'CategoriesController@update');
+Route::get('cms/categories/{id}/delete', 'CategoriesController@destroy');
+
+## Subcategories
+Route::get('cms/subcategories', 'SubcategoriesController@index');
+Route::get('cms/subcategories/create', 'SubcategoriesController@create');
+Route::post('cms/subcategories', 'SubcategoriesController@store');
+Route::get('cms/subcategories/{id}/edit', 'SubcategoriesController@edit');
+Route::post('cms/subcategories/{id}/update', 'SubcategoriesController@update');
+Route::get('cms/subcategories/{id}/delete', 'SubcategoriesController@destroy');

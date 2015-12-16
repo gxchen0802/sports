@@ -1,6 +1,6 @@
 @extends('cms.layouts.default')
 
-@include('cms.categories.sidebar')
+@include('cms.subcategories.sidebar')
 
 @section('content')
 
@@ -10,37 +10,37 @@
 
           <h2 class="sub-header">创建二级栏目</h2>
 
-        {{ Form::open(array('action' => array('CategoriesController@storeParent'), 'class' => 'form-horizontal')) }}
+        {{ Form::open(array('action' => array('SubcategoriesController@store'), 'class' => 'form-horizontal')) }}
 
             <div class="form-group">
-              <label for="parent" class="col-sm-2 control-label">一级栏目</label>
+              <label for="category_id" class="col-sm-2 control-label">一级栏目</label>
               <div class="col-sm-6">
-                <select class="form-control" name="child">
-                  @foreach ($records as $record)
-                    <option value="{{ $record->parent }}">{{ $record->parent }}</option>
+                <select class="form-control" name="category_id">
+                  @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                   @endforeach
                 </select>
               </div>
             </div>
 
             <div class="form-group">
-              <label for="parent" class="col-sm-2 control-label">二级栏目</label>
+              <label for="name" class="col-sm-2 control-label">二级栏目</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" name="parent" placeholder="二级栏目">
+                <input type="text" class="form-control" name="name" placeholder="二级栏目">
               </div>
             </div>
 
             <div class="form-group">
-              <label for="parent" class="col-sm-2 control-label">栏目文章是否唯一</label>
+              <label for="single_article" class="col-sm-2 control-label">栏目文章是否唯一</label>
               <div class="col-sm-6">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="single" id="optionsRadios1" value="yes" checked>唯一
+                    <input type="radio" name="single_article" id="optionsRadios1" value="1" checked>唯一
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="single" id="optionsRadios1" value="no">不唯一
+                    <input type="radio" name="single_article" id="optionsRadios1" value="0">不唯一
                   </label>
                 </div>
               </div>

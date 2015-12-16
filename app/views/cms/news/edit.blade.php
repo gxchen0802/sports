@@ -8,21 +8,21 @@
 
           @include('cms.layouts.notice')
 
-          <h2 class="sub-header">创建文章</h2>
+          <h2 class="sub-header">编辑文章</h2>
 
-        {{ Form::open(array('action' => array('NewsController@store'), 'class' => 'form-horizontal', 'files' => true)) }}
+        {{ Form::open(array('action' => array('NewsController@update', $article->id), 'class' => 'form-horizontal', 'files' => true)) }}
 
             <div class="form-group">
               <label for="title" class="col-sm-2 control-label">标题</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" name="title" placeholder="标题">
+                <input type="text" class="form-control" name="title" placeholder="标题" value="{{ $article->title }}">
               </div>
             </div>
 
             <div class="form-group">
               <label for="author" class="col-sm-2 control-label">作者</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" name="author" placeholder="作者">
+                <input type="text" class="form-control" name="author" placeholder="作者" value="{{ $article->author }}">
               </div>
             </div>
 
@@ -31,7 +31,9 @@
               <div class="col-sm-6">
                 <select class="form-control" name="subcategory_id">
                   @foreach ($subcategories as $subcategory)
-                    <option value="{{ $subcategory->id }}">{{ $subcategory->category.' - '.$subcategory->name.' - '.($subcategory->single_article ? '唯一' : '不唯一') }}</option>
+                    <option value="{{ $subcategory->id }}" {{ $article->subcategory_id == $subcategory->id ? 'selected' : '' }}>
+                      {{ $subcategory->category.' - '.$subcategory->name.' - '.($subcategory->single_article ? '唯一' : '不唯一') }}
+                    </option>
                   @endforeach
                 </select>
               </div>
@@ -40,7 +42,7 @@
             <div class="form-group">
               <label for="date" class="col-sm-2 control-label">日期</label>
               <div class="col-sm-6">
-                <input type="date" class="form-control" name="date" placeholder="作者" value="{{ date('Y-m-d') }}">
+                <input type="date" class="form-control" name="date" placeholder="作者" value="{{ $article->date }}">
               </div>
             </div>
 
@@ -49,7 +51,7 @@
               <div class="col-sm-10">
                 <!-- 加载编辑器的容器 -->
                 <script id="container" name="content" type="text/plain">
-                    文章内容
+                    {{ $article->content }}
                 </script>
                 <!-- 配置文件 -->
                 <script type="text/javascript" src="/js/rte/ueditor.config.js"></script>

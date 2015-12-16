@@ -31,9 +31,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">栏目 <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="/cms/categories">列表</a></li>
-                <li><a href="/cms/1st_categories/create">创建一级栏目</a></li>
-                <li><a href="/cms/2nd_categories/create">创建二级栏目</a></li>
+                <li><a href="/cms/categories">一级栏目</a></li>
+                <li><a href="/cms/subcategories">二级栏目</a></li>
               </ul>
             </li>
             <li class="dropdown">

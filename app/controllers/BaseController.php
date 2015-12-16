@@ -20,11 +20,11 @@ class BaseController extends Controller {
 
 	public function uploadDocument()
 	{
-        if ( ! Input::hasFile('document')) return false;
+        if ( ! Input::hasFile('document')) return;
 
         $size = Input::file('document')->getSize();
 
-        if ($size > self::FILE_SIZE_LIMIT) return false;  
+        if ($size > self::FILE_SIZE_LIMIT) return -1;  
 
         $extension = Input::file('document')->getClientOriginalExtension();
 
