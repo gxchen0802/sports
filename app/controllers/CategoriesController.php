@@ -2,6 +2,8 @@
 
 class CategoriesController extends BaseController {
 
+    const PER_PAGE = 20;
+
     public function __construct()
     {
         $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
@@ -16,14 +18,48 @@ class CategoriesController extends BaseController {
     }
 
 
-    // public function show($id)
-    // {
-    //     $record = News::findOrFail($id);
+    public function show($id)
+    {
+        $category = Categories::findOrFail($id);
 
-    //     $data = ['record' => $record];
+        $subcategories = Subcategories::where('category_id', $category->id)->notDeleted()->orderBy('id')->get();
 
-    //     return View::make('cms.news.show', $data); // return View('pages.about');
-    // }
+        $subcategory_ids = [];
+
+        foreach ($subcategories as $sub) 
+        {
+            $subcategory_ids[] = $sub->id;
+        }
+
+        //////////////
+        // Articles //
+        //////////////
+        $page = Input::get('page') ? (int)Input::get('page') : 1;
+
+        $offset = ($page - 1) * self::PER_PAGE;
+
+        $articles = News::whereIn('subcategory_id', $subcategory_ids)->notDeleted()->orderBy('date', 'desc')->skip($offset)->take(self::PER_PAGE)->get();
+
+        $articles_count = News::whereIn('subcategory_id', $subcategory_ids)->notDeleted()->count();
+
+        $total_pages = ceil($articles_count / self::PER_PAGE);
+
+        $start_index = $offset + 1;
+
+        $end_index = $start_index + count($articles) - 1;
+
+        $data = [
+            'category'      => $category, 
+            'subcategories' => $subcategories, 
+            'articles'      => $articles,
+            'total_pages'   => $total_pages,
+            'start_index'   => $start_index,
+            'end_index'     => $end_index,
+            'page'          => $page,
+            ];
+
+        return View::make('pages.categories', $data);
+    }
 
 
     public function create()

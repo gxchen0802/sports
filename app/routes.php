@@ -69,6 +69,7 @@ Route::post('cms/news/{id}/update', 'NewsController@update');
 Route::get('cms/news/{id}/delete', 'NewsController@destroy');
 
 ## Categories:
+Route::get('/categories/{id}', 'CategoriesController@show');
 Route::get('cms/categories', 'CategoriesController@index');
 Route::get('cms/categories/create', 'CategoriesController@create');
 Route::post('cms/categories', 'CategoriesController@store');
@@ -77,6 +78,7 @@ Route::post('cms/categories/{id}/update', 'CategoriesController@update');
 Route::get('cms/categories/{id}/delete', 'CategoriesController@destroy');
 
 ## Subcategories
+Route::get('/categories/{category_id}/subcategories/{subcategory_id}', 'SubcategoriesController@show');
 Route::get('cms/subcategories', 'SubcategoriesController@index');
 Route::get('cms/subcategories/create', 'SubcategoriesController@create');
 Route::post('cms/subcategories', 'SubcategoriesController@store');
