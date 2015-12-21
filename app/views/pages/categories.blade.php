@@ -27,19 +27,28 @@
                 <!-- 分页 -->
                 <div class="pagination mt30">
                     <p>
-                        <a href="#">首页</a>
-                        <a href="#">上一页</a>
-                        <a href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a class="on">4</a>
-                        <a href="#">5</a>
-                        <a href="#">下一页</a>
-                        <a href="#">末页</a>
+                        <a href="/categories/{{ $category->id }}">首页</a>
+
+                        <a href="/categories/{{ $category->id }}?page={{$previous_page}}">上一页</a>
+
+                        @for ($page = 1; $page <= $total_pages; $page++)
+                            <a href="/categories/{{ $category->id }}?page={{ $page }}" {{ $page == $current_page ? 'class="on"' : ''}}>{{$page}}</a>
+                        @endfor
+
+                        <a href="/categories/{{ $category->id }}?page={{$next_page}}">下一页</a>
+
+                        <a href="/categories/{{ $category->id }}?page={{ $total_pages }}">末页</a>
                     </p>
                     <span>{{$start_index}}-{{$end_index}}条，共{{$total_pages}}页</span>
                 </div>
             </div>
         </div>
+@stop
 
+@section('custom_js')
+<script type="text/javascript">
+    $(function() {
+        tiyuanFed.listInit();
+    });
+</script>
 @stop

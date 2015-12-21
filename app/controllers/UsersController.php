@@ -5,15 +5,19 @@ class UsersController extends Controller {
 
     public function __construct()
     {
-        $this->beforeFilter('csrf', ['only' => []]);   
+        $this->beforeFilter('csrf', ['only' => ['signin', 'register']]);   
     }
 
 
-    public function index()
+    // public function index()
+    // {
+    //     return User::all();
+    // }
+
+    public function signin()
     {
-        return User::all();
-    }
 
+    }
 
     public function register()
     {
@@ -22,30 +26,8 @@ class UsersController extends Controller {
 
     public function login()
     {
+        $data = [];
         
-    }
-
-    public function store()
-    {
-        User::create(['email' => 'test@email.com', 'username' => 'test username']);
-    }
-
-
-    public function update()
-    {
-        // User::where('id', 2)->update(['title' => 'test title 2']);
-    }
-
-
-    public function show($id)
-    {
-        $training = Trainings::findOrFail($id);
-
-        $data = ['training' => $training];
-
-        return View::make('trainings.show', $data); // return View('pages.about');
-        
-        // $this->layout->content = View::make('pages.about');
-        // echo $id;
+        return View::make('pages.login', $data);
     }
 }

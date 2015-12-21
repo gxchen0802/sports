@@ -1,12 +1,13 @@
         <!-- logo and menu -->
         <div class="head">
             <div class="search-box">
-                <form id="search" name="search" action="#" target="_blank" method="get">
-                    <input type="text" id="s-box" class="s-box" name="" value="" placeholder="请输入搜索关键字" />
+                <form id="search" name="search" action="/search" target="_blank" method="get">
+                    <input type="text" id="s-box" class="s-box" name="q" value="" placeholder="请输入搜索关键字" />
                     <button type="submit" id="s-submint" class="s-submint"><i class="icon icon-search"></i></button>
                 </form>
             </div>
         </div>
+        @if($_SERVER['REQUEST_URI'] != '/login')
         <!-- 菜单 -->
         <div class="nav-bar tab">
             <div class="nav">
@@ -91,3 +92,4 @@
                 <ul class="tab-con hide">7</ul>
             </div>
         </div>
+        @endif

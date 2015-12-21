@@ -13,6 +13,11 @@ Route::get('about', function()
     return View::make('pages.about'); // return View('pages.about');
 });
 
+## Login & Register:
+Route::get('login', 'UsersController@login');
+Route::post('register', 'UsersController@register');
+Route::post('signin', 'UsersController@signin');
+
 ## Trainings:
 Route::get('trainings', 'TrainingsController@index');
 Route::get('trainings/create', 'TrainingsController@create');
@@ -32,13 +37,10 @@ Route::post('trainings/{training_id}/attendees', 'TrainingsAttendeesController@s
 Route::get('trainings_attendees/{id}/approve', 'TrainingsAttendeesController@approve');
 Route::get('trainings_attendees/{id}/disapprove', 'TrainingsAttendeesController@disapprove');
 
-// search:
+## Search:
+Route::get('search', 'SearchController@show');
 // Route::get('search/attendees/worker_id/{worker_id}', 'SearchController@show');
 // Route::post('search/attendees/worker_id/{worker_id}', 'SearchController@attendees');
-
-## Users
-Route::post('register', 'UsersController@register');
-Route::post('login', 'UsersController@login');
 
 ## Locations:
 Route::get('locations', 'LocationsController@index');

@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
     <link type="text/css" rel="stylesheet" href="/css/main.min.css">
+    @yield('extra_css')
 </head>
 <body>
     <div class="body">
@@ -27,12 +28,9 @@
     </div>
 
     <script type="text/javascript" charset="utf-8" src="/js/jquery-1.11.3.min.js"></script>
+    @yield('extra_js')
     <script type="text/javascript" charset="utf-8" src="/js/main.min.js"></script>
-    <script type="text/javascript">
-    $(function() {
-        tiyuanFed.indexInit();
-    });
-    </script>
+    @yield('custom_js')
 </body>
 
 </html>

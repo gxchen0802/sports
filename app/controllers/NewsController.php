@@ -26,7 +26,7 @@ class NewsController extends BaseController {
 
         $data = ['record' => $record, 'subcategory' => $subcategory, 'category' => $category];
 
-        return View::make('cms.news.show', $data); // return View('pages.about');
+        return View::make('pages.news', $data); // return View('pages.about');
     }
 
 

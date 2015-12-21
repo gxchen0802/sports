@@ -4,61 +4,51 @@
         <!-- 导航菜单 -->
         <div class="subnav mt20">
             <div>
-                你所在的位置：<a href="#">中心简介</a> > 中心概况
+                你所在的位置：<a href="/categories/{{ $category->id }}">{{ $category->name }}</a> > {{$current_subcategory->name}}
             </div>
         </div>
         <!-- centre  -->
         <div class="centre mt20 clearfix bg-grey">
             <!-- sidebar -->
             <div class="sidebar">
-                <h3 class="title">中心简介</h3>
-                <a href="#" class="on">中心概况</a>
-                <a href="#">发展规划</a>
-                <a href="#">机构设置</a>
-                <a href="#">成员构成</a>
-                <a href="#">分中心</a>
+                <h3 class="title">{{ $category->name }}</h3>
+                @foreach($subcategories as $subcategory)
+                    <a href="/categories/{{ $category->id }}/subcategories/{{ $subcategory->id }}" {{ $subcategory->id == $current_sub_id ? 'class="on"' : '' }}>{{ $subcategory->name }}</a>
+                @endforeach
             </div>
             <!-- cen-list -->
             <div class="main-list i-list-box ">
                 <h3 class="title mb20"><span>公告通知</span></h3>
                 <ul class="list">
-                    <li><a href="#" target="_blank"><i class="icon"></i>6关于改革完善中央高校预算拨款制度的通知丨解读</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>2015年秋季开学工作暨"护校安园"行动落实情况专项督导报告</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>西南政法大学强化“三个一”建设深化人才培养模式改革</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>浙江理工大学运用“三三法则”全面推进信息公开工作,全体师生在全面推进信息公开工作,…</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>四川着力推进教育信息化</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>6关于改革完善中央高校预算拨款制度的通知丨解读</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>2015年秋季开学工作暨"护校安园"行动落实情况专项督导报告</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>西南政法大学强化“三个一”建设深化人才培养模式改革</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>浙江理工大学运用“三三法则”全面推进信息公开工作,全体师生在全面推进信息公开工作,…</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>四川着力推进教育信息化</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>6关于改革完善中央高校预算拨款制度的通知丨解读</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>2015年秋季开学工作暨"护校安园"行动落实情况专项督导报告</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>西南政法大学强化“三个一”建设深化人才培养模式改革</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>浙江理工大学运用“三三法则”全面推进信息公开工作,全体师生在全面推进信息公开工作,…</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>四川着力推进教育信息化</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>6关于改革完善中央高校预算拨款制度的通知丨解读</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>2015年秋季开学工作暨"护校安园"行动落实情况专项督导报告</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>西南政法大学强化“三个一”建设深化人才培养模式改革</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>浙江理工大学运用“三三法则”全面推进信息公开工作,全体师生在全面推进信息公开工作,…</a><span class="datetime">1-30</span></li>
-                    <li><a href="#" target="_blank"><i class="icon"></i>四川着力推进教育信息化</a><span class="datetime">1-30</span></li>
+                    @foreach($articles as $article)
+                        <li><a href="/news/{{ $article->id }}" target="_blank"><i class="icon"></i>{{ $article->title }}</a><span class="datetime">{{ date('m-d', strtotime($article->date)) }}</span></li>
+                    @endforeach
                 </ul>
                 <!-- 分页 -->
                 <div class="pagination mt30">
                     <p>
-                        <a href="#">首页</a>
-                        <a href="#">上一页</a>
-                        <a href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a class="on">4</a>
-                        <a href="#">5</a>
-                        <a href="#">下一页</a>
-                        <a href="#">末页</a>
+                        <a href="/categories/{{ $category->id }}">首页</a>
+
+                        <a href="/categories/{{ $category->id }}?page={{$previous_page}}">上一页</a>
+
+                        @for ($page = 1; $page <= $total_pages; $page++)
+                            <a href="/categories/{{ $category->id }}?page={{ $page }}" {{ $page == $current_page ? 'class="on"' : ''}}>{{$page}}</a>
+                        @endfor
+
+                        <a href="/categories/{{ $category->id }}?page={{$next_page}}">下一页</a>
+
+                        <a href="/categories/{{ $category->id }}?page={{ $total_pages }}">末页</a>
                     </p>
-                    <span>1-20条，共5页</span>
+                    <span>{{$start_index}}-{{$end_index}}条，共{{$total_pages}}页</span>
                 </div>
             </div>
         </div>
+@stop
 
+@section('custom_js')
+<script type="text/javascript">
+    $(function() {
+        tiyuanFed.listInit();
+    });
+</script>
 @stop

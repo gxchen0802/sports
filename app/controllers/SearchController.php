@@ -2,32 +2,52 @@
 
 class SearchController extends Controller {
 
-    private $worker_id;
-    private $start_date;
-    private $end_date;
-    private $training_title;
-    private $training_speaker;
-    private $training_score;
-
+    const PER_PAGE = 20;
+    
     public function __construct()
     {
-        // $this->worker_id        = Input::get('worker_id');
-        $this->start_date       = Input::get('start_date');
-        $this->end_date         = Input::get('end_date');
-        $this->training_title   = Input::get('training_title');
-        $this->training_speaker = Input::get('training_speaker');
-        $this->training_score   = Input::get('training_score');
-
-        $this->beforeFilter('csrf', ['only' => ['attendees']]);   
+        $this->beforeFilter('csrf', ['only' => []]);   
     }
 
-    public function show($worker_id)
+    public function show()
     {
-        // Auth::check
+        $q = Input::get('q');
 
-        $data = ['worker_id' => $worker_id];
+        if ( ! $q) return Redirect::back();
 
-        return View::make('cms.search.show', $data); // return View('pages.about');
+        $current_page = Input::get('page') ? (int)Input::get('page') : 1;
+
+        $offset = ($current_page - 1) * self::PER_PAGE;
+
+        $results_count = News::where('title', 'like', "%{$q}%")->orWhere('content', 'like', "%{$q}%")->notDeleted()->orderBy('date', 'desc')->count();
+
+        $results = News::where('title', 'like', "%{$q}%")->orWhere('content', 'like', "%{$q}%")->notDeleted()->orderBy('date', 'desc')->get();
+
+        $total_pages = ceil($results_count / self::PER_PAGE);
+    
+        $start_index = $offset + 1;
+        $end_index   = $offset + count($results);
+
+        $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
+        $next_page     = ($current_page + 1 > $total_pages) ? $total_pages : ($current_page + 1);
+
+
+        // $data['q']             = $q;
+        // $data['results']       = $results;
+        // $data['results_count'] = $results_count;
+        $data = [
+            'q'             => $q, 
+            'results'       => $results,
+            'results_count' => $results_count,
+            'total_pages'   => $total_pages,
+            'start_index'   => $start_index,
+            'end_index'     => $end_index,
+            'current_page'  => $current_page,
+            'previous_page' => $previous_page,
+            'next_page'     => $next_page,
+            ];
+            
+        return View::make('pages.search', $data); // return View('pages.about');
     }
 
     public function attendees($worker_id)

@@ -2,6 +2,8 @@
 
 class SubcategoriesController extends BaseController {
 
+    const PER_PAGE = 20;
+
     public function __construct()
     {
         $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
@@ -18,14 +20,65 @@ class SubcategoriesController extends BaseController {
     }
 
 
-    // public function show($id)
-    // {
-    //     $record = News::findOrFail($id);
+    public function show($id, $sub_id)
+    {
+        $current_subcategory = Subcategories::findOrFail($sub_id);
 
-    //     $data = ['record' => $record];
+        $category = Categories::findOrFail($id);
 
-    //     return View::make('cms.news.show', $data); // return View('pages.about');
-    // }
+        $subcategories = Subcategories::where('category_id', $category->id)->notDeleted()->orderBy('id')->get();
+
+        $subcategory_ids = [];
+
+        foreach ($subcategories as $sub) 
+        {
+            $subcategory_ids[] = $sub->id;
+        }
+
+        //////////////
+        // Articles //
+        //////////////
+        $current_page = Input::get('page') ? (int)Input::get('page') : 1;
+
+        $offset = ($current_page - 1) * self::PER_PAGE;
+
+        $articles = News::where('subcategory_id', $sub_id)->notDeleted()->orderBy('date', 'desc')->skip($offset)->take(self::PER_PAGE)->get();
+
+        $articles_count = News::where('subcategory_id', $sub_id)->notDeleted()->count();
+
+        $total_pages = ceil($articles_count / self::PER_PAGE);
+
+        $start_index = $offset + 1;
+
+        $end_index = $start_index + count($articles) - 1;
+
+        $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
+
+        $next_page = ($current_page + 1 > $total_pages) ? $total_pages : ($current_page + 1);
+
+        $data = [
+            'current_sub_id'      => $sub_id, 
+            'current_subcategory' => $current_subcategory, 
+            'category'            => $category, 
+            'subcategories'       => $subcategories, 
+            'articles'            => $articles,
+            'total_pages'         => $total_pages,
+            'start_index'         => $start_index,
+            'end_index'           => $end_index,
+            'current_page'        => $current_page,
+            'previous_page'       => $previous_page,
+            'next_page'           => $next_page,
+            ];
+
+        if ($current_subcategory->single_article)
+        {
+            return View::make('pages.single_subcategories', $data);
+        }
+        else
+        {
+            return View::make('pages.subcategories', $data);
+        }
+    }
 
 
     public function create()

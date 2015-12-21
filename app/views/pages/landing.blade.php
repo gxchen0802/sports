@@ -59,5 +59,13 @@
                 </div>
             </div>
         </div>
+@stop
 
+
+@section('custom_js')
+<script type="text/javascript">
+    $(function() {
+        tiyuanFed.indexInit();
+    });
+</script>
 @stop

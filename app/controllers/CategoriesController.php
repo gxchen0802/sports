@@ -34,9 +34,9 @@ class CategoriesController extends BaseController {
         //////////////
         // Articles //
         //////////////
-        $page = Input::get('page') ? (int)Input::get('page') : 1;
+        $current_page = Input::get('page') ? (int)Input::get('page') : 1;
 
-        $offset = ($page - 1) * self::PER_PAGE;
+        $offset = ($current_page - 1) * self::PER_PAGE;
 
         $articles = News::whereIn('subcategory_id', $subcategory_ids)->notDeleted()->orderBy('date', 'desc')->skip($offset)->take(self::PER_PAGE)->get();
 
@@ -45,8 +45,10 @@ class CategoriesController extends BaseController {
         $total_pages = ceil($articles_count / self::PER_PAGE);
 
         $start_index = $offset + 1;
+        $end_index   = $offset + count($articles);
 
-        $end_index = $start_index + count($articles) - 1;
+        $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
+        $next_page     = ($current_page + 1 > $total_pages) ? $total_pages : ($current_page + 1);
 
         $data = [
             'category'      => $category, 
@@ -55,7 +57,9 @@ class CategoriesController extends BaseController {
             'total_pages'   => $total_pages,
             'start_index'   => $start_index,
             'end_index'     => $end_index,
-            'page'          => $page,
+            'current_page'  => $current_page,
+            'previous_page' => $previous_page,
+            'next_page'     => $next_page,
             ];
 
         return View::make('pages.categories', $data);
