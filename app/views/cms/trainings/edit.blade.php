@@ -22,13 +22,6 @@
             </div>
 
             <div class="form-group">
-              <label for="content" class="col-sm-2 control-label">介绍</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="content" placeholder="介绍" value="{{$training->content}}">
-              </div>
-            </div>
-
-            <div class="form-group">
               <label for="date" class="col-sm-2 control-label">日期</label>
               <div class="col-sm-6">
                 <input type="date" class="form-control" name="date" placeholder="日期" value="{{$training->date}}">
@@ -67,6 +60,13 @@
               <label for="score" class="col-sm-2 control-label">学分</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" name="score" placeholder="学分" value="{{$training->score}}">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="content" class="col-sm-2 control-label">介绍</label>
+              <div class="col-sm-6">
+                <textarea class="form-control" placeholder="介绍" name="content" cols="50" rows="10">{{$training->content}}</textarea>
               </div>
             </div>
 
