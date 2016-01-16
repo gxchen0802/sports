@@ -6,7 +6,8 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"phpexcel/phpexcel": "dev-master"
+		"phpexcel/phpexcel": "dev-master",
+		"mews/captcha": "dev-master-l4"
 	},
 	"autoload": {
 		"classmap": [

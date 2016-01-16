@@ -15,9 +15,9 @@
         {{ Form::open(array('action' => array('LocationsController@store'), 'class' => 'form-horizontal')) }}
 
             <div class="form-group">
-              <label for="name" class="col-sm-2 control-label">名称</label>
+              <label for="name" class="col-sm-2 control-label">场地名称</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" name="name" placeholder="名称">
+                <input type="text" class="form-control" name="name" placeholder="场地名称">
               </div>
             </div>
 

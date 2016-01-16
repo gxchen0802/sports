@@ -16,7 +16,8 @@ Route::get('about', function()
 ## Login & Register:
 Route::get('login', 'UsersController@login');
 Route::post('register', 'UsersController@register');
-Route::post('signin', 'UsersController@signin');
+Route::post('login', 'UsersController@doLogin');
+Route::get('logout', 'UsersController@logout');
 
 ## Trainings:
 Route::get('trainings', 'TrainingsController@index');
@@ -33,6 +34,7 @@ Route::put('trainings', 'TrainingsController@update');
 Route::get('trainings_attendees', 'TrainingsAttendeesController@index');
 Route::get('trainings_attendees/list', 'TrainingsAttendeesController@index');
 Route::post('trainings/{training_id}/attendees', 'TrainingsAttendeesController@store');
+Route::post('trainings_attendees/search', 'TrainingsAttendeesController@search');
 
 Route::get('trainings_attendees/{id}/approve', 'TrainingsAttendeesController@approve');
 Route::get('trainings_attendees/{id}/disapprove', 'TrainingsAttendeesController@disapprove');

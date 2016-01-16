@@ -1,3 +1,5 @@
+
+
         <!-- logo and menu -->
         <div class="head">
             <div class="search-box">
@@ -7,89 +9,63 @@
                 </form>
             </div>
         </div>
-        @if($_SERVER['REQUEST_URI'] != '/login')
+@if($_SERVER['REQUEST_URI'] != '/login')
         <!-- 菜单 -->
         <div class="nav-bar tab">
             <div class="nav">
-                <a href="#" target="_blank" class="tag">中心简介</a>
-                <a href="#" target="_blank" class="tag">教师培训</a>
-                <a href="#" target="_blank" class="tag">教学研究</a>
-                <a href="#" target="_blank" class="tag">教学资源</a>
-                <a href="#" target="_blank" class="tag">教学测评</a>
-                <a href="#" target="_blank" class="tag">对话交流</a>
-                <a href="#" target="_blank" class="tag">教学督导</a>
+                <a href="/categories/1" target="_blank" class="tag">中心简介</a>
+                <a href="/categories/2" target="_blank" class="tag">教师培训</a>
+                <a href="/categories/3" target="_blank" class="tag">教学研究</a>
+                <a href="/categories/4" target="_blank" class="tag">教学资源</a>
+                <a href="/categories/5" target="_blank" class="tag">教学测评</a>
+                <a href="/categories/6" target="_blank" class="tag">对话交流</a>
+                <a href="/categories/7" target="_blank" class="tag">教学督导</a>
             </div>
             <div class="nav-down">
+<?php
+    // 中心简介：中心概况+发展规划
+    $news1 = News::where('subcategory_id', 1)->select('content')->notDeleted()->orderBy('date', 'desc')->first();
+    $content_1 = isset($news1->content) ? $news1->content : '';
+
+    $news2 = News::where('subcategory_id', 2)->notDeleted()->get();
+?>
                 <!-- 中心简介 -->
                 <ul class="tab-con hide">
                     <li class="nav-one-img mr20"><img src="../images/pic01.jpg" /></li>
-                    <li class="nav-one-details mr20">我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案我是文案</li>
+                    <li class="nav-one-details mr20">{{$content_1}}</li>
                     <li class="nav-one-list i-list-box mr20">
                         <ul class="list">
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
+                            @foreach($news2 as $news)
+                                <li><a href="/news/{{$news->id}}" target="_blank"><i class="icon"></i>{{$news->title}}</a><span class="datetime">{{ date('m-d', strtotime($news->date)) }}</span></li>
+                            @endforeach
                         </ul>
                     </li>
                 </ul>
-                <!-- 教师培训 -->
+<?php
+    $categories = Categories::where('id', '<=', 7)->where('id', '>', 1)->get();
+?>
+    @foreach ($categories as $category) 
                 <ul class="tab-con hide">
+<?php
+        $subcategories = Subcategories::where('category_id', $category->id)->notDeleted()->orderBy('updated_at')->limit(3)->get(); 
+?>
+
+        @foreach ($subcategories as $subcategory) 
                     <li class="nav-list i-list-box mr20">
-                        <h3 class="title mb20"><span>公告通知</span></h3>
+                        <h3 class="title mb20"><span>{{$subcategory->name}}</span></h3>
                         <ul class="list">
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
+<?php
+            $articles = News::where('subcategory_id', $subcategory->id)->notDeleted()->orderBy('date', 'desc')->get()
+?>                        
+            @foreach ($articles as $article)
+                            <li><a href="/news/{{$article->id}}" target="_blank"><i class="icon"></i>{{$article->title}}</a><span class="datetime">{{ date('m-d', strtotime($article->date)) }}</span></li>
+            @endforeach
                         </ul>
                     </li>
-                    <li class="nav-list i-list-box mr20">
-                        <h3 class="title mb20"><span>公告通知</span></h3>
-                        <ul class="list">
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                        </ul>
-                    </li>
-                    <li class="nav-list i-list-box mr20">
-                        <h3 class="title mb20"><span>公告通知</span></h3>
-                        <ul class="list">
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                            <li><a href="#" target="_blank"><i class="icon"></i>关于表彰2014－2015学年上海体育学院海体育学院</a><span class="datetime">1-30</span></li>
-                        </ul>
-                    </li>
+        @endforeach  
+
                 </ul>
-                <!-- 教学研究 -->
-                <ul class="tab-con hide">3</ul>
-                <!-- 教学资源 -->
-                <ul class="tab-con hide">4</ul>
-                <!-- 教学测评 -->
-                <ul class="tab-con hide">5</ul>
-                <!-- 对话交流 -->
-                <ul class="tab-con hide">6</ul>
-                <!-- 教学督导 -->
-                <ul class="tab-con hide">7</ul>
+    @endforeach
             </div>
         </div>
-        @endif
+@endif

@@ -31,7 +31,7 @@
               <div class="col-sm-6">
                 <select class="form-control" name="subcategory_id">
                   @foreach ($subcategories as $subcategory)
-                    <option value="{{ $subcategory->id }}">{{ $subcategory->category.' - '.$subcategory->name.' - '.($subcategory->single_article ? '唯一' : '不唯一') }}</option>
+                    <option value="{{ $subcategory->id }}">{{ $subcategory->category.' - '.$subcategory->name.' - '.($subcategory->single_article ? '封面' : '列表') }}</option>
                   @endforeach
                 </select>
               </div>

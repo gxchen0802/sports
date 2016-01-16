@@ -24,13 +24,6 @@
             </div>
 
             <div class="form-group">
-              {{Form::label('介绍', '介绍', array('class' => 'col-sm-2 control-label'))}}
-              <div class="col-sm-6">
-                {{Form::text('content', '', array('class' => 'form-control', 'placeholder' => '介绍'))}}            
-              </div>
-            </div>
-
-            <div class="form-group">
               <label for="date" class="col-sm-2 control-label">日期</label>
               <div class="col-sm-6">
                 <input type="date" class="form-control" name="date" placeholder="日期">
@@ -73,8 +66,15 @@
             </div> 
 
             <div class="form-group">
+              {{Form::label('介绍', '介绍', array('class' => 'col-sm-2 control-label'))}}
+              <div class="col-sm-6">
+                {{Form::textarea('content', '', array('class' => 'form-control', 'placeholder' => '介绍'))}}            
+              </div>
+            </div>
+
+            <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">提交</button>
+                <button type="submit" class="btn btn-primary">提交</button>
               </div>
             </div>
 

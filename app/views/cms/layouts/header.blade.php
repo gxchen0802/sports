@@ -43,7 +43,11 @@
               </ul>
             </li>
           </ul>
-       
+
+          <ul class="nav navbar-nav navbar-right">
+            <a class="navbar-brand" href="/logout">登出</a>
+          </ul>
+
         </div>
       </div>
     </nav>

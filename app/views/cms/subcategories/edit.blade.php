@@ -31,16 +31,16 @@
             </div>
 
             <div class="form-group">
-              <label for="single_article" class="col-sm-2 control-label">栏目文章是否唯一</label>
+              <label for="single_article" class="col-sm-2 control-label">栏目类型</label>
               <div class="col-sm-6">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="single_article" id="optionsRadios1" value="1" {{ $subcategory->single_article == '1' ? 'checked' : '' }}>唯一
+                    <input type="radio" name="single_article" id="optionsRadios1" value="1" {{ $subcategory->single_article == '1' ? 'checked' : '' }}>封面
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="single_article" id="optionsRadios1" value="0" {{ $subcategory->single_article == '0' ? 'checked' : '' }}>不唯一
+                    <input type="radio" name="single_article" id="optionsRadios1" value="0" {{ $subcategory->single_article == '0' ? 'checked' : '' }}>列表
                   </label>
                 </div>
               </div>

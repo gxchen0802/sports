@@ -92,9 +92,12 @@ class LocationsController extends Controller {
 
     public function searchForm()
     {
+        $locations = Locations::notDeleted()->lists('name', 'id');
+
         $data = [];
 
-        $data['records'] = [];
+        $data['locations'] = $locations;
+        $data['records']   = [];
 
         return View::make('cms.locations.search', $data);
     }
@@ -102,17 +105,20 @@ class LocationsController extends Controller {
 
     public function search()
     {
+        $locations = Locations::notDeleted()->lists('name', 'id');
+     
         $data = [];
 
         $query = LocationsRent::join('locations', 'locations_rent.location_id', '=', 'locations.id')->select('locations_rent.*', 'locations.name')->where('locations_rent.worker_id', Input::get('worker_id'));
 
         if (Input::get('start_date')) $query->where('locations_rent.start_date', Input::get('start_date'));
 
-        if (Input::get('location_name')) $query->where('locations.name', 'like', "%{Input::get('location_name')}%");
+        if (Input::get('location_id')) $query->where('locations.id', Input::get('location_id'));
 
         $records = $query->get();
 
-        $data['records'] = $records;
+        $data['locations'] = $locations;
+        $data['records']   = $records;
 
         return View::make('cms.locations.search', $data);
     }

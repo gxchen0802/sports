@@ -12,6 +12,44 @@
 
           <h2 class="sub-header">查询预约记录</h2>
 
+        {{ Form::open(array('action' => array('LocationsController@search'), 'class' => 'form-horizontal')) }}
+            <fieldset>
+            
+              <div class="form-group">
+                <label for="worker_id" class="col-sm-2 control-label">工号</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" name="worker_id" placeholder="工号" value="{{Session::get('user_name')}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">开始日期</label>
+                <div class="col-sm-6">
+                  <input type="date" class="form-control" name="start_date" placeholder="开始日期">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="场地" class="col-sm-2 control-label">场地</label>
+                <div class="col-sm-6">
+                  <select id="location_id" name="location_id" class="form-control">
+                      <option value=""></option>
+                    @foreach($locations as $id => $name)
+                      <option value="{{$id}}">{{$name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+              </div>
+            </fieldset>
+
+          {{ Form::close() }}
+
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -49,37 +87,5 @@
             </table>
           </div>
 
-          <h2 class="sub-header">申请租用</h2>
-
-        {{ Form::open(array('action' => array('LocationsController@search'), 'class' => 'form-horizontal')) }}
-            
-            <div class="form-group">
-              <label for="worker_id" class="col-sm-2 control-label">工号</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="worker_id" placeholder="工号">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">开始日期</label>
-              <div class="col-sm-6">
-                <input type="date" class="form-control" name="start_date" placeholder="开始日期">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="location_name" class="col-sm-2 control-label">场地</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="location_name" placeholder="场地">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">提交</button>
-              </div>
-            </div>
-
-          {{ Form::close() }}
 
 @stop

@@ -10,7 +10,7 @@ class NewsController extends BaseController {
 
     public function index()
     {
-        $data = ['news' => News::notDeleted()->get()];
+        $data = ['news' => News::join('subcategories', 'news.subcategory_id', '=', 'subcategories.id')->join('categories', 'news.category_id', '=', 'categories.id')->select('news.*', 'subcategories.name as subcategory_name', 'categories.name as category_name')->where('news.status', 'active')->get()];
 
         return View::make('cms.news.index', $data); // return View('pages.about');
     }
@@ -48,11 +48,14 @@ class NewsController extends BaseController {
 
         try 
         {
+            $subcategory = Subcategories::find(Input::get('subcategory_id'));
+
             News::create([
                 'title'          => Input::get('title'),
                 'content'        => Input::get('content'),
                 'date'           => date('Y-m-d', strtotime(Input::get('date'))),
                 'author'         => Input::get('author'),
+                'category_id'    => $subcategory->category_id,
                 'subcategory_id' => Input::get('subcategory_id'),
                 'document'       => $upload_document,
                 ]);
@@ -87,11 +90,14 @@ class NewsController extends BaseController {
 
         try 
         {
+            $subcategory = Subcategories::find(Input::get('subcategory_id'));
+
             News::where('id', $id)->update([
                 'title'          => Input::get('title'),
                 'content'        => Input::get('content'),
                 'date'           => date('Y-m-d', strtotime(Input::get('date'))),
                 'author'         => Input::get('author'),
+                'category_id'    => $subcategory->category_id,
                 'subcategory_id' => Input::get('subcategory_id'),
                 'document'       => $upload_document,
                 ]);

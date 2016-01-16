@@ -6,7 +6,8 @@ class TrainingsController extends Controller {
 
     public function __construct()
     {
-        $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
+        $this->beforeFilter('worker');
+        // $this->beforeFilter('admin', ['only' => ['store', 'update']]);
     }
 
 

@@ -13,6 +13,8 @@
                 <tr>
                   <th>#</th>
                   <th>标题</th>
+                  <th>一级栏目</th>
+                  <th>二级栏目</th>
                   <th>日期</th>
                   <th>作者</th>
                   <th>附件</th>
@@ -24,6 +26,8 @@
                 <tr>
                   <td>{{ $record->id }}</td>
                   <td>{{ $record->title }}</td>
+                  <td>{{ $record->category_name }}</td>
+                  <td>{{ $record->subcategory_name }}</td>
                   <td>{{ $record->date }}</td>
                   <td>{{ $record->author }}</td>
                   <td>{{ $record->document ? link_to_asset($record->document, '下载', $attributes = array(), $secure = null) : ''}}</td>

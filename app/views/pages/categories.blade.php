@@ -18,7 +18,7 @@
             </div>
             <!-- cen-list -->
             <div class="main-list i-list-box ">
-                <h3 class="title mb20"><span>公告通知</span></h3>
+                <h3 class="title mb20"><span>{{ $category->name }}</span></h3>
                 <ul class="list">
                     @foreach($articles as $article)
                         <li><a href="/news/{{ $article->id }}" target="_blank"><i class="icon"></i>{{ $article->title }}</a><span class="datetime">{{ date('m-d', strtotime($article->date)) }}</span></li>

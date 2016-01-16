@@ -31,7 +31,7 @@
                 <tr>
                   <td>{{ $training->id }}</td>
                   <td>{{ $training->title }}</td>
-                  <td>{{ $training->content }}</td>
+                  <td>{{ mb_substr($training->content, 0, 10) }}</td>
                   <td>{{ $training->date }}</td>
                   <td>{{ $training->speaker }}</td>
                   <td>{{ $training->location }}</td>

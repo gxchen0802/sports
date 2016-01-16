@@ -43,10 +43,10 @@
                   <td>{{ $record->comment }}</td>
                   <td>
                     <a href="/locations_rent/{{ $record->id }}/approve">
-                      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-ok" aria-hidden="true">同意</span>
                     </a>
                     <a href="/locations_rent/{{ $record->id }}/disapprove">
-                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true">驳回</span>
                     </a>
                   </td>
                 </tr>
