@@ -45,7 +45,17 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <a class="navbar-brand" href="/logout">登出</a>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">用户 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/cms/password/edit">更改密码</a></li>
+              @if(Session::get('user_role') == 'admin') 
+                <li><a href="/cms/users">重置密码</a></li>
+              @endif
+                <li><a href="/logout">登出</a></li>
+              </ul>
+            </li>            
+            
           </ul>
 
         </div>

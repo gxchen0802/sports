@@ -89,3 +89,8 @@ Route::post('cms/subcategories', 'SubcategoriesController@store');
 Route::get('cms/subcategories/{id}/edit', 'SubcategoriesController@edit');
 Route::post('cms/subcategories/{id}/update', 'SubcategoriesController@update');
 Route::get('cms/subcategories/{id}/delete', 'SubcategoriesController@destroy');
+
+Route::get('cms/password/edit', 'PasswordController@edit');
+Route::post('cms/password/update', 'PasswordController@update');
+Route::get('cms/users', 'UsersController@lists');
+Route::any('cms/users/{id}/password/reset', 'PasswordController@reset');

@@ -82,4 +82,11 @@ class UsersController extends Controller {
 
         return Redirect::to('/');
     }
+
+    public function lists()
+    {
+        $data['users'] = User::all();
+
+        return View::make('cms.users.list', $data);
+    }
 }

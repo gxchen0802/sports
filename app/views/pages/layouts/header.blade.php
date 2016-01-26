@@ -9,7 +9,7 @@
                 </form>
             </div>
         </div>
-@if($_SERVER['REQUEST_URI'] != '/login')
+@if(strpos($_SERVER['REQUEST_URI'], '/login') === false)
         <!-- 菜单 -->
         <div class="nav-bar tab">
             <div class="nav">
@@ -23,6 +23,7 @@
             </div>
             <div class="nav-down">
 <?php
+
     // 中心简介：中心概况+发展规划
     $news1 = News::where('subcategory_id', 1)->select('content')->notDeleted()->orderBy('date', 'desc')->first();
     $content_1 = isset($news1->content) ? $news1->content : '';
