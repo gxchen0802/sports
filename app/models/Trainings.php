@@ -22,4 +22,9 @@ class Trainings extends Eloquent {
     {
         return $query->where('status', '!=', 'deleted');
     }
+
+    public function scopeNotOver($query)
+    {
+        return $query->where('date', '>=', date('Y-m-d'));
+    }    
 }

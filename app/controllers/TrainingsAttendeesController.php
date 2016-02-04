@@ -110,6 +110,33 @@ class TrainingsAttendeesController extends Controller {
         return Redirect::to("trainings/{$training_id}?success=注册成功")->with('message', 'register success!');
     }
 
+    public function ajaxStore($training_id)
+    {
+        if ( ! $this->worker_id) 
+        {
+            return json_encode(['code' => 201, 'message' => '需要工号！']);
+        }
+        
+        if ( ! User::where('worker_id', $this->worker_id)->first())
+        {
+            return json_encode(['code' => 202, 'message' => "工号 {$this->worker_id} 不存在!"]);
+        }
+
+        $history = TrainingsAttendees::where('worker_id', $this->worker_id)->where('training_id', $training_id)->first();
+
+        if ($history) 
+            return json_encode(['code' => 203, 'message' => "{$this->worker_id} 已经注册此培训!"]);
+
+        TrainingsAttendees::create([
+            'worker_id'   => $this->worker_id, 
+            'training_id' => $training_id,
+            ]);
+
+        Trainings::where('id', $training_id)->decrement('seats_left');
+
+        return json_encode(['code' => 200, 'message' => '报名成功']);
+    }
+
     public function search()
     {
         $query = TrainingsAttendees::join('trainings', 'trainings_attendees.training_id', '=', 'trainings.id')->select(

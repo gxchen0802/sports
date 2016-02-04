@@ -2,9 +2,13 @@
 
 class NewsController extends BaseController {
 
+    public $current_worker_id;
+
     public function __construct()
     {
         $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
+
+        $this->current_worker_id = Session::get('user_name');
     }
 
 
@@ -24,7 +28,21 @@ class NewsController extends BaseController {
 
         $category = Categories::findOrFail($subcategory->category_id);
 
-        $data = ['record' => $record, 'subcategory' => $subcategory, 'category' => $category];
+        // Training history:
+        $training_history = null;
+
+        if ($record->training_id && $this->current_worker_id)
+        {
+            $training_history = TrainingsAttendees::where('training_id', $record->training_id)->where('worker_id', $this->current_worker_id)->first();
+        }
+
+        $data = [
+            'record'            => $record, 
+            'subcategory'       => $subcategory, 
+            'category'          => $category, 
+            'training_history'  => $training_history, 
+            'current_worker_id' => $this->current_worker_id
+            ];
 
         return View::make('pages.news', $data); // return View('pages.about');
     }
@@ -34,7 +52,9 @@ class NewsController extends BaseController {
     {
         $subcategories = Subcategories::join('categories', 'categories.id', '=', 'subcategories.category_id')->select('subcategories.*', 'categories.name as category')->where('subcategories.status', 'active')->orderBy('categories.id')->orderBy('subcategories.id')->get();
 
-        $data = ['subcategories' => $subcategories];
+        $trainings = Trainings::notDeleted()->notOver()->get();
+
+        $data = ['subcategories' => $subcategories, 'trainings' => $trainings];
 
         return View::make('cms.news.create', $data);
     }
@@ -57,6 +77,7 @@ class NewsController extends BaseController {
                 'author'         => Input::get('author'),
                 'category_id'    => $subcategory->category_id,
                 'subcategory_id' => Input::get('subcategory_id'),
+                'training_id'    => Input::get('training_id'),
                 'document'       => $upload_document,
                 ]);
         } 
@@ -75,9 +96,11 @@ class NewsController extends BaseController {
     {
         $subcategories = Subcategories::join('categories', 'categories.id', '=', 'subcategories.category_id')->select('subcategories.*', 'categories.name as category')->where('subcategories.status', 'active')->orderBy('categories.id')->orderBy('subcategories.id')->get();
 
+        $trainings = Trainings::notDeleted()->notOver()->get();
+
         $article = News::find($id);
 
-        $data = ['subcategories' => $subcategories, 'article' => $article];
+        $data = ['subcategories' => $subcategories, 'article' => $article, 'trainings' => $trainings];
 
         return View::make('cms.news.edit', $data);
     }
@@ -99,6 +122,7 @@ class NewsController extends BaseController {
                 'author'         => Input::get('author'),
                 'category_id'    => $subcategory->category_id,
                 'subcategory_id' => Input::get('subcategory_id'),
+                'training_id'    => Input::get('training_id'),
                 'document'       => $upload_document,
                 ]);
         } 
@@ -109,7 +133,7 @@ class NewsController extends BaseController {
             return Redirect::to("cms/news/{$id}/edit?success=参数有误!");
         }
 
-        return Redirect::to("cms/news/{$id}/edit?success=创建成功");
+        return Redirect::to("cms/news/{$id}/edit?success=编辑成功");
     }
 
 

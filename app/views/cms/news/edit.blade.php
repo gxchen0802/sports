@@ -65,6 +65,18 @@
             </div>
 
             <div class="form-group">
+              <label for="category_id" class="col-sm-2 control-label">培训</label>
+              <div class="col-sm-6">
+                <select class="form-control" name="training_id">
+                    <option value="0" {{ ! $article->training_id ? 'selected' : '' }}></option>
+                  @foreach ($trainings as $training)
+                    <option value="{{ $training->id }}" {{ $article->training_id == $training->id ? 'selected' : '' }}>{{ $training->title.' - '.$training->date.' '.$training->time }}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label for="document" class="col-sm-2 control-label">附件（5MB）</label>
               <div class="col-sm-6">
                 <input type="file" class="form-control" name="document" placeholder="附件">

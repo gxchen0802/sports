@@ -24,8 +24,14 @@
     <div class="erwei hide"><img src="http://placehold.it/120x120&text=Pic001-120*120" /></div>
     <!-- 右侧浮层 -->
     <div class="r-fixed">
+        <a href="/login" title="注册登录"><i class="icon icon-login"></i></a>
+        <a href="/categories/2" title="在线报名"><i class="icon icon-bm"></i></a>
+        <a href="/locations_rent/search" title="场地预约"><i class="icon icon-cd"></i></a>
+        <a class="rWeixin" href="javascript:void(0);" title="公众号"><i class="icon icon-wx"></i></a>
         <a class="goTop hide" href="javascript:void(0);" title="返回顶部"><i class="icon go-top"></i></a>
     </div>
+
+    @yield('extra_html')
 
     <script type="text/javascript" charset="utf-8" src="/js/jquery-1.11.3.min.js"></script>
     @yield('extra_js')

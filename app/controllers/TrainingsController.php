@@ -13,7 +13,7 @@ class TrainingsController extends Controller {
 
     public function index()
     {
-        $data = ['trainings' => Trainings::notDeleted()->get()];
+        $data = ['trainings' => Trainings::notDeleted()->notOver()->get()];
 
         return View::make('cms.trainings.index', $data); // return View('pages.about');
     }
