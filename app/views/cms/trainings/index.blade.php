@@ -42,14 +42,14 @@
                     <a href="/trainings/{{ $training->id }}">
                       <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </a>
+                  @if(Session::get('user_role') == 'admin') 
                     <a href="/trainings/{{ $training->id }}/edit">
                       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
                     <a href="/trainings/{{ $training->id }}/delete">
                       <span class="glyphicon glyphicon-trash del" aria-hidden="true"></span>
                     </a>
-                      <!-- {{ Form::open(array('action' => array('TrainingsController@destroy', $training->id), 'method' => 'delete')) }} -->
-                      <!-- {{ Form::close() }} -->
+                  @endif
                   </td>
                 </tr>
                 @endforeach

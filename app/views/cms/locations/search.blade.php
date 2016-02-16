@@ -18,7 +18,7 @@
               <div class="form-group">
                 <label for="worker_id" class="col-sm-2 control-label">工号</label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control" name="worker_id" placeholder="工号" value="{{Session::get('user_name')}}">
+                  <input type="text" class="form-control" name="worker_id" placeholder="工号" value="{{Session::get('user_name')}}" <?php echo Session::get('user_role') == 'admin' ? '' : 'disabled="disabled"'?>>
                 </div>
               </div>
 

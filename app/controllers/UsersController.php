@@ -63,6 +63,8 @@ class UsersController extends Controller {
             ]); 
 
         Session::put('user_id', $user->id);
+        Session::put('user_name', $user->worker_id);
+        Session::put('user_role', 'teacher');
 
         $redirect_url = $refer_url ? $refer_url : '/';
 

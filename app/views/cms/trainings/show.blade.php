@@ -56,7 +56,7 @@
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">工号</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" name="worker_id" placeholder="工号">
+                <input type="text" class="form-control" name="worker_id" placeholder="工号" value="{{Session::get('user_name')}}" disabled="disabled">
               </div>
             </div>
             <div class="form-group">

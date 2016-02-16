@@ -18,7 +18,7 @@
               <div class="form-group">
                 <label for="worker_id" class="col-sm-2 control-label">工号</label>
                 <div class="col-sm-6">
-                  <input type="text" id="worker_id" name="worker_id" class="form-control" placeholder="工号" >
+                  <input type="text" id="worker_id" name="worker_id" class="form-control" placeholder="工号" value="{{Session::get('user_name')}}" <?php echo Session::get('user_role') == 'admin' ? '' : 'disabled="disabled"'?>>
                 </div>
               </div>
 
@@ -66,12 +66,14 @@
                   <td>{{ $record->worker_id }}</td>
                   <td>{{ $record->status }}</td>
                   <td>
+                    @if(Session::get('user_role') == 'admin') 
                     <a href="/trainings_attendees/{{ $record->id }}/approve">
                       <span class="glyphicon glyphicon-ok" aria-hidden="true">签到</span>
                     </a>
                     <a href="/trainings_attendees/{{ $record->id }}/disapprove">
                       <span class="glyphicon glyphicon-remove" aria-hidden="true">旷课</span>
                     </a>
+                    @endif
                   </td>
                 </tr>
                 @endforeach

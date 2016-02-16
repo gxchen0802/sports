@@ -30,12 +30,14 @@
                     <a href="/locations/{{ $location->id }}">
                       <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </a>
+                  @if(Session::get('user_role') == 'admin') 
                     <a href="/locations/{{ $location->id }}/edit">
                       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
                     <a href="/locations/{{ $location->id }}/delete">
                       <span class="glyphicon glyphicon-trash del" aria-hidden="true"></span>
                     </a>
+                  @endif
                   </td>
                 </tr>
                 @endforeach

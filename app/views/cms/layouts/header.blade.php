@@ -15,7 +15,9 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">在线报名 <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="/trainings">列表</a></li>
+              @if(Session::get('user_role') == 'admin') 
                 <li><a href="/trainings/create">创建</a></li>
+              @endif
                 <li><a href="/trainings_attendees">记录</a></li>
               </ul>
             </li>
@@ -23,11 +25,14 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">场地预约 <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="/locations">列表</a></li>
+              @if(Session::get('user_role') == 'admin') 
                 <li><a href="/locations/create">创建</a></li>
+              @endif
                 <li role="separator" class="divider"></li>
                 <li><a href="/locations_rent/search">查询预约记录</a></li>
               </ul>
             </li>
+          @if(Session::get('user_role') == 'admin') 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">栏目 <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -35,11 +40,14 @@
                 <li><a href="/cms/subcategories">二级栏目</a></li>
               </ul>
             </li>
+          @endif
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">文章 <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="/cms/news">列表</a></li>
+              @if(Session::get('user_role') == 'admin') 
                 <li><a href="/cms/news/create">创建文章</a></li>
+              @endif
               </ul>
             </li>
           </ul>
