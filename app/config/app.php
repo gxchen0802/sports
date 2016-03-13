@@ -2,17 +2,6 @@
 
 return array(
 
-	/*
-	|--------------------------------------------------------------------------
-	| Application Debug Mode
-	|--------------------------------------------------------------------------
-	|
-	| When your application is in debug mode, detailed error messages with
-	| stack traces will be shown on every error that occurs within your
-	| application. If disabled, a simple generic error page is shown.
-	|
-	*/
-
 	'debug' => true,
 
 	/*
@@ -28,29 +17,8 @@ return array(
 
 	'url' => 'http://localhost',
 
-	/*
-	|--------------------------------------------------------------------------
-	| Application Timezone
-	|--------------------------------------------------------------------------
-	|
-	| Here you may specify the default timezone for your application, which
-	| will be used by the PHP date and date-time functions. We have gone
-	| ahead and set this to a sensible default for you out of the box.
-	|
-	*/
-
 	'timezone' => 'Asia/Shanghai',
 
-	/*
-	|--------------------------------------------------------------------------
-	| Application Locale Configuration
-	|--------------------------------------------------------------------------
-	|
-	| The application locale determines the default locale that will be used
-	| by the translation service provider. You are free to set this value
-	| to any of the locales which will be supported by the application.
-	|
-	*/
 
 	'locale' => 'en',
 
@@ -82,17 +50,6 @@ return array(
 	'key' => '4f0eh7393X0tc4e4T1c6d530G139d437',  // replace the default key
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
-
-	/*
-	|--------------------------------------------------------------------------
-	| Autoloaded Service Providers
-	|--------------------------------------------------------------------------
-	|
-	| The service providers listed here will be automatically loaded on the
-	| request to your application. Feel free to add your own services to
-	| this array to grant expanded functionality to your applications.
-	|
-	*/
 
 	'providers' => array(
 
@@ -137,17 +94,6 @@ return array(
 	*/
 
 	'manifest' => storage_path().'/meta',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Class Aliases
-	|--------------------------------------------------------------------------
-	|
-	| This array of class aliases will be registered when this application
-	| is started. However, feel free to register as many as you wish as
-	| the aliases are "lazy" loaded so they don't hinder performance.
-	|
-	*/
 
 	'aliases' => array(
 

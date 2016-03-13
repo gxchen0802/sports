@@ -95,3 +95,18 @@ Route::get('cms/password/edit', 'PasswordController@edit');
 Route::post('cms/password/update', 'PasswordController@update');
 Route::get('cms/users', 'UsersController@lists');
 Route::any('cms/users/{id}/password/reset', 'PasswordController@reset');
+
+## Friendly sites
+Route::get('cms/friendly_sites', 'FriendlyController@indexFriendly');
+Route::get('cms/friendly_sites/create', 'FriendlyController@createFriendly');
+Route::post('cms/friendly_sites/store', 'FriendlyController@storeFriendly');
+Route::get('cms/friendly_sites/{id}/edit', 'FriendlyController@editFriendly');
+Route::post('cms/friendly_sites/{id}/update', 'FriendlyController@updateFriendly');
+Route::get('cms/friendly_sites/{id}/delete', 'FriendlyController@deleteFriendly');
+
+Route::get('cms/education_department', 'FriendlyController@indexEducation');
+Route::get('cms/education_department/create', 'FriendlyController@createEducation');
+Route::post('cms/education_department/store', 'FriendlyController@storeEducation');
+Route::get('cms/education_department/{id}/edit', 'FriendlyController@editEducation');
+Route::post('cms/education_department/{id}/update', 'FriendlyController@updateEducation');
+Route::get('cms/education_department/{id}/delete', 'FriendlyController@deleteEducation');

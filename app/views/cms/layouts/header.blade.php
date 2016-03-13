@@ -40,6 +40,15 @@
                 <li><a href="/cms/subcategories">二级栏目</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">友情链接 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/cms/friendly_sites">友情链接列表</a></li>
+                <li><a href="/cms/friendly_sites/create">创建友情链接</a></li>
+                <li><a href="/cms/education_department">教育部列表</a></li>
+                <li><a href="/cms/education_department/create">创建教育部链接</a></li>
+              </ul>
+            </li>
           @endif
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">文章 <span class="caret"></span></a>

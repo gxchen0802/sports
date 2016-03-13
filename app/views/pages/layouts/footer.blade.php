@@ -8,49 +8,21 @@
                         <span class="tag on">友情链接</span>
                         <span class="tag">教育部</span>
                     </h3>
+<?php
+    $friendly = Friendly::isFriendly()->notDeleted()->get();
+?>
                     <ul class="hide show">
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
-                        <li><a href="#" target="_blank">体育部</a></li>
+                        @foreach($friendly as $f)
+                            <li><a href="{{$f->link}}" target="_blank">{{$f->name}}</a></li>
+                        @endforeach
                     </ul>
+<?php
+    $education = Friendly::isEducation()->notDeleted()->get();
+?>
                     <ul class="hide">
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
-                        <li><a href="#" target="_blank">教育部</a></li>
+                        @foreach($education as $e)
+                            <li><a href="{{$e->link}}" target="_blank">{{$f->name}}</a></li>
+                        @endforeach
                     </ul>
                 </div>
                 <!-- copyright -->
