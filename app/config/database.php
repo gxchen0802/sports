@@ -15,7 +15,7 @@ return array(
 
 	'fetch' => PDO::FETCH_CLASS,
 
-	'default' => 'mamp',
+	'default' => 'mysql',
 
 	'connections' => array(
 
