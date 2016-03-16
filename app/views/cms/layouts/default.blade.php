@@ -11,6 +11,7 @@
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for CMS -->
+    <link href="/css/cms-main.min.css" rel="stylesheet">
     <link href="/css/cms.css" rel="stylesheet">
 </head>
 <body>
@@ -32,6 +33,7 @@
     <script src="/js/bootstrap.min.js"></script>
     
     <!-- Custom styles for CMS -->
+    <script src="/js/cms-main.min.js"></script>
     <script src="/js/cms.js"></script>
 </body>
 </html>

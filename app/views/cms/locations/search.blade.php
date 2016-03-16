@@ -25,7 +25,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">开始日期</label>
                 <div class="col-sm-6">
-                  <input type="date" class="form-control" name="start_date" placeholder="开始日期">
+                  <input type="date" class="form-control defTime" name="start_date" placeholder="开始日期">
                 </div>
               </div>
 

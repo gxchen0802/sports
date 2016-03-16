@@ -24,7 +24,7 @@
             <div class="form-group">
               <label for="date" class="col-sm-2 control-label">日期</label>
               <div class="col-sm-6">
-                <input type="date" class="form-control" name="date" placeholder="日期" value="{{$training->date}}">
+                <input type="date" class="form-control defTime" name="date" placeholder="日期" value="{{$training->date}}">
               </div>
             </div>
 
