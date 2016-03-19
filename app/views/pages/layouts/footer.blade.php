@@ -27,8 +27,8 @@
                 </div>
                 <!-- copyright -->
                 <div class="f-copyright">
-                    <p>Copyright @ 2013 Shanghai University of Sport</p>
-                    <p>上海市杨浦区长海路399 号 邮编：200438 总机：(86-21)51253000 沪ICP备05052054</p>
+                    <p>Copyright @ 2016 Shanghai University of Sport</p>
+                    <p>上海市杨浦区长海路399号 邮编：200438 总机：(86-21)51253000 沪ICP备05052054</p>
                 </div>
             </div>
             <!-- 联系方式 -->

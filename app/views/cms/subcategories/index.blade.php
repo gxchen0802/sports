@@ -14,7 +14,7 @@
                   <th>#</th>
                   <th>一级栏目</th>
                   <th>二级栏目</th>
-                  <th>栏目文章是否唯一</th>
+                  <th>栏目类型</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -24,8 +24,17 @@
                   <td>{{ $subcategory->id }}</td>
                   <td>{{ $subcategory->category }}</td>
                   <td>{{ $subcategory->name }}</td>
-                  <td>{{ $subcategory->single_article ? '唯一' : '不唯一' }}</td>
+                  @if ($subcategory->types == 1)
+                    <td>封面</td>
+                  @elseif ($subcategory->types == 2)
+                    <td>留言板</td>
+                  @else
+                    <td>列表</td>
+                  @endif
                   <td>
+                    <a href="/categories/{{ $subcategory->category_id }}/subcategories/{{ $subcategory->id }}" target="_blank">
+                      <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    </a>  
                     <a href="/cms/subcategories/{{ $subcategory->id }}/edit">
                       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>

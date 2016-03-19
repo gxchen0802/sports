@@ -31,18 +31,23 @@
             </div>
 
             <div class="form-group">
-              <label for="single_article" class="col-sm-2 control-label">栏目类型</label>
+              <label for="types" class="col-sm-2 control-label">栏目类型</label>
               <div class="col-sm-6">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="single_article" id="optionsRadios1" value="1" checked>封面
+                    <input type="radio" name="types" id="optionsRadios1" value="1" checked>封面
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="single_article" id="optionsRadios1" value="0">列表
+                    <input type="radio" name="types" id="optionsRadios1" value="0">列表
                   </label>
                 </div>
+<!--                 <div class="radio">
+                  <label>
+                    <input type="radio" name="types" id="optionsRadios1" value="2">留言
+                  </label>
+                </div> -->
               </div>
             </div>
 

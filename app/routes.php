@@ -110,3 +110,13 @@ Route::post('cms/education_department/store', 'FriendlyController@storeEducation
 Route::get('cms/education_department/{id}/edit', 'FriendlyController@editEducation');
 Route::post('cms/education_department/{id}/update', 'FriendlyController@updateEducation');
 Route::get('cms/education_department/{id}/delete', 'FriendlyController@deleteEducation');
+
+## 留言管理
+Route::post('messages', 'MessageController@store');
+Route::get('messages', 'MessageController@index');
+Route::get('cms/messages', 'MessageController@indexCMS');
+Route::get('cms/messages/unreply', 'MessageController@indexCMSUnreply');
+Route::get('cms/messages/{id}/edit', 'MessageController@edit');
+Route::post('cms/messages/{id}/edit', 'MessageController@update');
+Route::get('cms/messages/{id}/delete', 'MessageController@destroy');
+

@@ -12,7 +12,7 @@ class SubcategoriesController extends BaseController {
 
     public function index()
     {
-        $subcategories = Subcategories::join('categories', 'categories.id', '=', 'subcategories.category_id')->select('subcategories.*', 'categories.name as category')->where('subcategories.status', 'active')->orderBy('categories.id')->orderBy('subcategories.id')->get();
+        $subcategories = Subcategories::join('categories', 'categories.id', '=', 'subcategories.category_id')->select('subcategories.*', 'categories.name as category', 'categories.id as category_id')->where('subcategories.status', 'active')->orderBy('categories.id')->orderBy('subcategories.id')->get();
 
         $data = ['subcategories' => $subcategories];
 
@@ -70,9 +70,13 @@ class SubcategoriesController extends BaseController {
             'next_page'           => $next_page,
             ];
 
-        if ($current_subcategory->single_article)
+        if ($current_subcategory->types == 1)
         {
             return View::make('pages.single_subcategories', $data);
+        }
+        elseif ($current_subcategory->types == 2) 
+        {
+            return Redirect::to('/messages');
         }
         else
         {
@@ -96,9 +100,9 @@ class SubcategoriesController extends BaseController {
         try 
         {
             Subcategories::create([
-                'category_id'    => Input::get('category_id'),
-                'name'           => Input::get('name'),
-                'single_article' => Input::get('single_article'),
+                'category_id' => Input::get('category_id'),
+                'name'        => Input::get('name'),
+                'types'       => Input::get('types'),
                 ]);
         } 
         catch (Exception $e) 
@@ -131,9 +135,9 @@ class SubcategoriesController extends BaseController {
         try 
         {
             Subcategories::where('id', $id)->update([
-                'category_id'    => Input::get('category_id'),
-                'name'           => Input::get('name'),
-                'single_article' => Input::get('single_article'),
+                'category_id' => Input::get('category_id'),
+                'name'        => Input::get('name'),
+                'types'       => Input::get('types'),
                 ]);
         } 
         catch (Exception $e) 

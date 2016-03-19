@@ -32,7 +32,7 @@
                 <select class="form-control" name="subcategory_id">
                   @foreach ($subcategories as $subcategory)
                     <option value="{{ $subcategory->id }}" {{ $article->subcategory_id == $subcategory->id ? 'selected' : '' }}>
-                      {{ $subcategory->category.' - '.$subcategory->name.' - '.($subcategory->single_article ? '唯一' : '不唯一') }}
+                      {{ $subcategory->category.' - '.$subcategory->name }}
                     </option>
                   @endforeach
                 </select>

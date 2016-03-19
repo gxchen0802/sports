@@ -4,9 +4,15 @@ class FriendlyController extends BaseController {
 
     const PER_PAGE = 20;
 
+    private $link;
+
     public function __construct()
     {
         // $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
+        
+        $link = ltrim(Input::get('link'), 'http://');
+
+        $this->link = 'http://'.$link;
     }
 
 
@@ -42,7 +48,7 @@ class FriendlyController extends BaseController {
         {
             Friendly::create([
                 'name' => Input::get('name'),
-                'link' => Input::get('link'),
+                'link' => $this->link,
                 'type' => 'friendly',
                 ]);
         } 
@@ -63,7 +69,7 @@ class FriendlyController extends BaseController {
         {
             Friendly::create([
                 'name' => Input::get('name'),
-                'link' => Input::get('link'),
+                'link' => $this->link,
                 'type' => 'education',
                 ]);
         } 
@@ -101,7 +107,7 @@ class FriendlyController extends BaseController {
         {
             Friendly::where('id', $id)->update([
                 'name' => Input::get('name'),
-                'link' => Input::get('link'),
+                'link' => $this->link,
                 ]);
         } 
         catch (Exception $e) 
@@ -120,7 +126,7 @@ class FriendlyController extends BaseController {
         {
             Friendly::where('id', $id)->update([
                 'name' => Input::get('name'),
-                'link' => Input::get('link'),
+                'link' => $this->link,
                 ]);
         } 
         catch (Exception $e) 

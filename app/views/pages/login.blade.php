@@ -27,11 +27,11 @@
                         <span>密码：</span>
                         <input type="password" name="password" id="password2" value="" maxlength="20" placeholder="请输入密码" data-validation-engine="validate[required]">
                     </li>
-                    <li>
+<!--                     <li>
                         <span>验证码：</span>
                         <input type="text" name="captcha" id="captcha2" value="" maxlength="6" placeholder="请输入验证码" class="short" data-validation-engine="validate[required]">
                         <img class="captcha-pic" src="../images/captcha.png" alt="验证码">
-                    </li>
+                    </li> -->
                     <li>
                         <span></span>
                         <label>
@@ -80,11 +80,11 @@
                         <span>工作单位：</span>
                         <input type="text" name="company" id="company" value="" maxlength="50" placeholder="请输入您工作单位">
                     </li>
-                    <li>
+<!--                     <li>
                         <span><em>*</em>验证码：</span>
                         <input type="text" name="captcha" id="captcha" value="" maxlength="6" placeholder="请输入验证码" class="short" data-validation-engine="validate[required]">
                         <img class="captcha-pic" src="../images/captcha.png" alt="验证码">
-                    </li>
+                    </li> -->
                     <li>
                         <button type="submint" class="btn btn-bule3 btn-ok" title="立即注册">立即注册</button>
                     </li>
