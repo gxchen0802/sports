@@ -8,6 +8,8 @@ class FriendlyController extends BaseController {
 
     public function __construct()
     {
+        $this->beforeFilter('worker');
+        
         // $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
         
         $link = ltrim(Input::get('link'), 'http://');

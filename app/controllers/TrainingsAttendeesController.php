@@ -7,6 +7,8 @@ class TrainingsAttendeesController extends Controller {
 
     public function __construct()
     {
+        $this->beforeFilter('worker');
+        
         $this->worker_id = Input::get('worker_id');
 
         $this->beforeFilter('csrf', ['only' => ['store', 'search']]);   
