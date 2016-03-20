@@ -5,6 +5,8 @@ class LocationsController extends Controller {
 
     public function __construct()
     {
+        $this->beforeFilter('worker');
+        
         $this->beforeFilter('csrf', ['only' => ['store', 'update', 'rent', 'search']]);   
     }
 

@@ -4,10 +4,12 @@ class MessageController extends BaseController {
 
     const PER_PAGE = 20;
 
-    const COOL_DOWN = 100; // mins
+    const COOL_DOWN = 10; // mins
 
     public function __construct()
     {
+        $this->beforeFilter('worker');
+
         $this->beforeFilter('csrf', ['only' => ['store']]);  
     }
 
@@ -67,7 +69,7 @@ class MessageController extends BaseController {
             'disable_submit' => $is_flooding ? 'disabled' : '',
             ];
 
-        return View::make('pages.message_subcategories', $data);
+        return View::make('pages.messages', $data);
     }
 
     public function indexCMS()

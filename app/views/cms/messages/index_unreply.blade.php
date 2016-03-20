@@ -40,4 +40,20 @@
             </table>
           </div>
 
+
+          <div class="pagination mt30">
+              <p>
+
+                  <a href="/cms/messages/unreply">首页</a>
+                  <a href="/cms/messages/unreply?page={{ $previous_page }}">上一页</a>
+
+                  @for ($page = 1; $page <= $total_pages; $page++)
+                      <a href="/cms/messages/unreply?page={{ $page }}" {{ $page == $current_page ? 'class="on"' : ''}}>{{$page}}</a>
+                  @endfor
+
+                  <a href="/cms/messages/unreply?page={{ $next_page }}">下一页</a>
+                  <a href="/cms/messages/unreply?page={{ $total_pages }}">末页</a>
+              </p>
+              <span>{{$start_index}}-{{$end_index}}条，共{{$total_pages}}页</span>
+          </div>
 @stop
