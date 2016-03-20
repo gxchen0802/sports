@@ -12,6 +12,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for CMS -->
     <link href="/css/cms-main.min.css" rel="stylesheet">
+    @yield('extra_css')
     <link href="/css/cms.css" rel="stylesheet">
 </head>
 <body>
@@ -35,5 +36,7 @@
     <!-- Custom styles for CMS -->
     <script src="/js/cms-main.min.js"></script>
     <script src="/js/cms.js"></script>
+    @yield('extra_js')
+    @yield('custom_js')
 </body>
 </html>

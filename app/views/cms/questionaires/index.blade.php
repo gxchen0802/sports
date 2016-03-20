@@ -1,42 +1,38 @@
 @extends('cms.layouts.default')
 
-@include('cms.messages.sidebar')
+@include('cms.questionaires.sidebar')
 
 @section('content')
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-          <h2 class="sub-header">留言列表</h2>
+          <h2 class="sub-header">问卷调查列表</h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>留言内容</th>
-                  <th>留言人</th>
-                  <th>留言时间</th>
-                  <th>回复</th>
-                  <th>回复人</th>
-                  <th>回复时间</th>
+                  <th>标题</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
+                  <th>状态</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($messages as $m)
+                @foreach ($questionaires as $q)
                 <tr>
-                  <td>{{ $m->message }}</td>
-                  <td>{{ $m->username }}</td>
-                  <td>{{ $m->created_at }}</td>
-                  <td>{{ $m->reply }}</td>
-                  <td>{{ $m->reply_author }}</td>
-                  <td>{{ $m->updated_at }}</td>
+                  <td>{{ $q->title }}</td>
+                  <td>{{ $q->start_time }}</td>
+                  <td>{{ $q->end_time }}</td>
+                  <td>{{ $q->status == 'active' ? '开启' : '关闭' }}</td>
                   <td>
-           <!--          <a href="/messages" target="_blank">
+                    <a href="/questionaires/{{ $q->id }}" target="_blank">
                       <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                    </a> -->
-                    <a href="/cms/messages/{{ $m->id }}/edit">
+                    </a>
+                    <a href="/cms/questionaires/{{ $q->id }}/edit">
                       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
-                    <a href="/cms/messages/{{ $m->id }}/delete">
+                    <a href="/cms/questionaires/{{ $q->id }}/delete">
                       <span class="glyphicon glyphicon-trash del" aria-hidden="true"></span>
                     </a>
                   </td>
@@ -49,6 +45,7 @@
 
           <div class="pagination mt30">
               <p>
+
                   <a href="/cms/messages">首页</a>
                   <a href="/cms/messages?page={{ $previous_page }}">上一页</a>
 

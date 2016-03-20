@@ -49,6 +49,13 @@
                 <li><a href="/cms/education_department/create">创建教育部链接</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">问卷调查 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/cms/questionaires">问卷调查列表</a></li>
+                <li><a href="/cms/questionaires/create">创建问卷调查</a></li>
+              </ul>
+            </li>
           @endif
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">留言板 <span class="caret"></span></a>
