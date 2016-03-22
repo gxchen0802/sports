@@ -127,5 +127,6 @@ Route::get('cms/questionaires/create', 'QuestionairesController@create');
 Route::post('cms/questionaires/create', 'QuestionairesController@store');
 Route::post('questionaires/{questionaire_id}/vote', 'QuestionairesController@vote');
 Route::get('cms/questionaires/{id}/delete', 'QuestionairesController@destroy');
+Route::get('cms/questionaires/{id}/stats', 'QuestionairesController@stats');
 Route::get('cms/questionaires/{id}/edit', 'QuestionairesController@edit');
 Route::post('cms/questionaires/{id}/edit', 'QuestionairesController@update');

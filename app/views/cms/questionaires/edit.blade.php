@@ -8,19 +8,19 @@
 
           @include('cms.layouts.notice')
 
-          <h2 class="sub-header">创建问卷调查</h2>
+          <h2 class="sub-header">编辑问卷调查</h2>
 
-        {{ Form::open(array('action' => array('QuestionairesController@create'), 'class' => 'filter-form form-horizontal validate', 'id' => 'voteDetailsForm')) }}
+        {{ Form::open(array('action' => array('QuestionairesController@update', $questionaire->id), 'class' => 'filter-form form-horizontal validate', 'id' => 'voteDetailsForm')) }}
 
             <!-- 投票项的JSON串保存位置 name 可以自定义-->
-            <input type="hidden" name="itmes" id="itmes" value="">
-            <!-- <input type="hidden" name="itmes" id="itmes" value='[{"id":"Aa001","title":"测试问题00001","options":[{"id":"a001","name":"aaaaaa"},{"id":"a003","name":"bbbbbb"},{"id":"a003","name":"ccccc"},{"id":"a004","name":"dddddd"},{"id":"a005","name":"eeeee"}]},{"id":"Ab002","title":"测试问题00002","options":[{"id":"b001","name":"fffff"},{"id":"b003","name":"ggggg"},{"id":"b003","name":"hhhhh"},{"id":"b004","name":"iiiiii"},{"id":"b005","name":"jjjjjj"}]},{"id":"Ac003","title":"测试问题00003","options":[{"id":"c001","name":"kkkkk"},{"id":"c003","name":"llllll"},{"id":"c003","name":"mmmm"},{"id":"c004","name":"nnnnn"},{"id":"c005","name":"pppppp"}]}]'> -->
+            <!-- <input type="hidden" name="itmes" id="itmes" value=""> -->
+            <input type="hidden" name="itmes" id="itmes" value='{{$jsons}}'>
             <div class="cms-result">
                 <!-- table列表 -->
                 <div class="form-group">
                     <label class="col-xs-3 control-label"><strong class="text-danger">*</strong> 名称：</label>
                     <div class="col-xs-9">
-                        <input type="text" name="name" class="validate[required] form-control result-input" value="" maxlength="100" placeholder="请输入投票名称">
+                        <input type="text" name="name" class="validate[required] form-control result-input" value="{{$questionaire->title}}" maxlength="100" placeholder="请输入投票名称">
                     </div>
                 </div>
                <div class="form-group">
@@ -75,17 +75,17 @@
                     <label class="col-xs-3 control-label"><strong class="text-danger">*</strong>是否启用：</label>
                     <div class="col-xs-9">
                         <label class="radio-inline">
-                            <input type="radio" name="status" value="active" checked=""> 是
+                            <input type="radio" name="status" value="active" {{$questionaire->status == 'active' ? 'checked=""' : ''}} > 是
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="status" value="hide"> 否
+                            <input type="radio" name="status" value="hide" {{$questionaire->status == 'hide' ? 'checked=""' : ''}}> 否
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-xs-3 control-label">备注：</label>
                     <div class="col-xs-9">
-                        <textarea name="remark" id="remark" class="form-control  result-textarea" class="validate[maxSize[300]]" placeholder="请输入留言内容，最大不超过300字" maxlength="300" rows="5"></textarea>
+                        <textarea name="remark" id="remark" class="form-control  result-textarea" class="validate[maxSize[300]]" placeholder="请输入留言内容，最大不超过300字" maxlength="300" rows="5">{{$questionaire->description}}</textarea>
                     </div>
                 </div>
                 <div class="form-group">

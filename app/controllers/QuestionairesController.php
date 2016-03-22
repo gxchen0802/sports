@@ -8,7 +8,7 @@ class QuestionairesController extends BaseController {
     {
         $this->beforeFilter('admin');
 
-        $this->beforeFilter('csrf', ['only' => ['store', 'vote']]);  
+        $this->beforeFilter('csrf', ['only' => ['store', 'update', 'vote']]);  
     }
 
     public function create()
@@ -26,10 +26,10 @@ class QuestionairesController extends BaseController {
                 'end_time'    => Input::get('endTime'),
                 // 'type'        => Input::get('type'),
                 'status'      => Input::get('status'),
-                'description' => Input::get('description'),
+                'description' => Input::get('remark'),
                 ]);
 
-            $questions = Input::get('undefined');
+            $questions = Input::get('itmes');
 
             foreach ($questions as $q) 
             {
@@ -42,16 +42,14 @@ class QuestionairesController extends BaseController {
                     ]);
 
                 // Insert Answers:
-                $answers = explode(' ', $q['option']); // array
-
                 $rows = [];
 
-                foreach ($answers as $answer) 
+                foreach ($q['option'] as $option) 
                 {
                     $row = [];
                     $row['questionaire_id'] = $questionaire_id;
                     $row['question_id']     = $question_id;
-                    $row['answer']          = trim($answer);
+                    $row['answer']          = $option['name'];
 
                     $rows[]= $row;                    
                 }
@@ -114,7 +112,7 @@ class QuestionairesController extends BaseController {
     {
         $data = [];
 
-        $questionaire = Questionaires::where('id', $questionaire_id)->notExpire()->isActive()->first();
+        $questionaire = Questionaires::where('id', $questionaire_id)->notExpire()->isActive()->notDeleted()->first();
 
         $vote_history = VoteHistory::where('questionaire_id', $questionaire_id)->where('ip', Request::ip())->first();
 
@@ -158,7 +156,7 @@ class QuestionairesController extends BaseController {
                 'questionaires_questions.question as question', 
                 'questionaires_answers.id as answer_id', 
                 'questionaires_answers.answer')
-            ->where('questionaires_questions.questionaire_id', $questionaire_id)->get();
+            ->where('questionaires_questions.questionaire_id', $questionaire_id)->where('questionaires_questions.status', 'active')->get();
 
         $quesitons_array = [];
 
@@ -210,34 +208,204 @@ class QuestionairesController extends BaseController {
         return Redirect::to("/questionaires/{$questionaire_id}?result=success");
     }
 
+    public function stats($questionaire_id)
+    {
+        $questionaire = Questionaires::find($questionaire_id);
+
+        $data['questionaire'] = $questionaire;
+
+        $questions = Questions::where('questionaire_id', $questionaire_id)->notDeleted()->get();
+
+        $data['questions'] = $questions;
+
+
+        // Format the questions to be : 
+        // 
+        // ['question_id' => ['answer_id', 'answer', 'question'],
+        //  ...
+        // ]
+        $lists = Questions::join('questionaires_answers', 'questionaires_questions.id', '=', 'questionaires_answers.question_id')
+            ->select(
+                'questionaires_questions.id as question_id', 
+                'questionaires_questions.question as question', 
+                'questionaires_answers.id as answer_id', 
+                'questionaires_answers.answer')
+            ->where('questionaires_questions.questionaire_id', $questionaire_id)->get();
+
+        $lists_array = [];
+
+        foreach ($lists as $q) 
+        {
+            $a = ['answer_id' => $q->answer_id, 'answer' => $q->answer, 'question' => $q->question];
+
+            $lists_array[$q->question_id][] = $a;
+        }
+
+        $raw_data_votes = [];
+
+        // 'question_id' => ['answer_id', 'answer', 'question']
+        foreach ($lists_array as $question_id => $q_arr) 
+        {
+            $json = [];
+
+            $total_count = 0;
+
+            foreach ($q_arr as $a_arr) 
+            {
+                $answer_id = $a_arr['answer_id'];
+                $answer    = $a_arr['answer'];
+                $question  = $a_arr['question'];
+
+                $count = Votes::where('questionaire_id', $questionaire_id)->where('question_id', $question_id)->where('answer_id', $answer_id)->count();
+
+                $a_arr['count'] = $count;
+
+                $json['options'][] = ['name' => $answer, 'count' => $count];
+
+                $total_count += $count;
+                // $raw_data_votes[$question_id][$answer_id] = $a_arr;
+            }
+
+            $json['total'] = $total_count;
+            $json['title'] = $question;
+            $json['id']    = $question_id;
+
+            $jsons[] = $json;
+        }
+
+
+        $data['jsons'] = json_encode($jsons);
+
+        return View::make('cms.questionaires.stats', $data);
+    }
+
+
     public function edit($questionaire_id)
     {
         $questionaire = Questionaires::find($questionaire_id);
 
         $data['questionaire'] = $questionaire;
 
+
+// {"id":"Aa001","title":"测试问题00001","options":[{"id":"a001","name":"aaaaaa"},{"id":"a003","name":"bbbbbb"},{"id":"a003","name":"ccccc"},{"id":"a004","name":"dddddd"},{"id":"a005","name":"eeeee"}]}
+        $quesitons = Questions::where('questionaire_id', $questionaire_id)->notDeleted()->get();
+
+        $items = [];
+
+        foreach ($quesitons as $q) 
+        {
+            $item = [];
+
+            $item['id']    = $q->id;
+            $item['title'] = $q->question;
+
+            // $a = ['answer_id' => $q->answer_id, 'answer' => $q->answer, 'question' => $q->question];
+
+            $answers = Answers::where('question_id', $q->id)->get();
+
+            $options = [];
+
+            foreach ($answers as $a) 
+            {
+                $option = [];
+
+                $option['id']   = $a->id;
+                $option['name'] = $a->answer;
+
+                $options[] = $option;
+            }
+
+            $item['options'] = $options;
+
+            $items[] = $item;
+        }
+
+        $data['jsons'] = json_encode($items);
+
         return View::make('cms.questionaires.edit', $data);
     }
 
-    public function update($id)
+    public function update($questionaire_id)
     {
         try 
         {
-            Messages::where('id', $id)->update([
-                'username'     => Input::get('username'),
-                'message'      => Input::get('message'),
-                'reply'        => Input::get('reply'),
-                'reply_author' => Input::get('reply_author'),
+            $questionaire_id = Questionaires::where('id', $questionaire_id)->update([
+                'title'       => Input::get('name'),
+                'start_time'  => Input::get('startTime'),
+                'end_time'    => Input::get('endTime'),
+                // 'type'        => Input::get('type'),
+                'status'      => Input::get('status'),
+                'description' => Input::get('remark'),
                 ]);
+
+            $questions = Input::get('itmes');
+
+            foreach ($questions as $q) 
+            {
+                $action      = $q['state'];
+                $question_id = $q['id'];  
+                $question    = $q['title'];
+
+                if ($action == 0)  // delete
+                {
+                    Questions::where('id', $question_id)->update(['status' => 'deleted']);
+
+                    Answers::where('question_id', $question_id)->update(['status' => 'deleted']);
+                }
+                elseif ($action == 2)  // edit 
+                {
+                    Questions::where('id', $question_id)->update(['question' => $question]);
+
+                    foreach ($q['option'] as $option) 
+                    {
+                        Answers::where('id', $option['id'])->update(['answer' => $option['name']]);
+                    }
+                }
+                else // $action == 1 : create
+                {
+                    // Insert Questions:
+                    $question_id = Questions::insertGetId([
+                            'questionaire_id' => $questionaire_id,
+                            'question'        => $question,
+                        ]);
+
+                    // Insert Answers:
+                    $rows = [];
+
+                    foreach ($q['option'] as $option) 
+                    {
+                        $row = [];
+                        $row['questionaire_id'] = $questionaire_id;
+                        $row['question_id']     = $question_id;
+                        $row['answer']          = $option['name'];
+
+                        $rows[]= $row;                    
+                    }
+
+                    Answers::insert($rows);
+                }
+            }
         } 
         catch (Exception $e) 
         {
-            Log::error('[Edit Message] '.$e->getMessage());
+            Log::error('[Update Questionaires] '.$e->getMessage());
 
-            return Redirect::to("cms/messages/{$id}/edit?error=参数有误!");
+            $error_response = [
+                'code'    => 400,
+                'message' => '创建失败',
+                'result'  => $e->getMessage()
+            ];
+
+            return $error_response;
         }
 
-        return Redirect::to("cms/messages/{$id}/edit?success=编辑成功");
+        $response = [
+            'code'    => 200,
+            'message' => '创建成功',
+            'result'  => 'success'
+        ];
+
+        return $response;
     }
 
     public function destroy($id)

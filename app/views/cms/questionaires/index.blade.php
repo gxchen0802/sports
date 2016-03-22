@@ -32,6 +32,9 @@
                     <a href="/cms/questionaires/{{ $q->id }}/edit">
                       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
+                    <a href="/cms/questionaires/{{ $q->id }}/stats">
+                      <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                    </a>
                     <a href="/cms/questionaires/{{ $q->id }}/delete">
                       <span class="glyphicon glyphicon-trash del" aria-hidden="true"></span>
                     </a>
