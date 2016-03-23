@@ -26,13 +26,13 @@
                <div class="form-group">
                     <label class="col-xs-3 control-label"><strong class="text-danger">*</strong> 开始时间：</label>
                     <div class="col-xs-9">
-                        <input type="text" class="validate[required] form-control arial result-input" name="startTime" id="sTime" placeholder="请输入开始时间" readonly>
+                        <input type="text" class="validate[required] form-control arial result-input" name="startTime" id="sTime" placeholder="请输入开始时间" value="{{$questionaire->start_time}}" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-xs-3 control-label"><strong class="text-danger">*</strong> 结束时间：</label>
                     <div class="col-xs-9">
-                        <input type="text" class="validate[required] form-control arial result-input" name="endTime" id="eTime" placeholder="请输入结束时间" readonly>
+                        <input type="text" class="validate[required] form-control arial result-input" name="endTime" id="eTime" placeholder="请输入结束时间" value="{{$questionaire->end_time}}" readonly>
                     </div>
                 </div>
   <!--              <div class="form-group">
