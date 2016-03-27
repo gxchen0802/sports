@@ -19,6 +19,8 @@ Route::post('register', 'UsersController@register');
 Route::post('login', 'UsersController@doLogin');
 Route::get('logout', 'UsersController@logout');
 
+Route::get('cms', 'UsersController@cms');
+
 ## Trainings:
 Route::get('trainings', 'TrainingsController@index');
 Route::get('trainings/create', 'TrainingsController@create');

@@ -7,7 +7,7 @@ class TrainingsAttendeesController extends Controller {
 
     public function __construct()
     {
-        $this->beforeFilter('worker');
+        $this->beforeFilter('worker', ['except' => ['ajaxStore']]);  // ajaxStore is on "news page" (front) 
         
         $this->worker_id = Input::get('worker_id');
 

@@ -39,7 +39,11 @@
             </div>
             <!-- 按钮列表  -->
             <div class="i-right">
+                @if ( ! Session::get('user_id'))
                 <a href="/login" target="_blank" class="btn btn-blue mb10">登录/注册</a>
+                @else
+                <a href="/cms" target="_blank" class="btn btn-blue mb10">进入后台</a>
+                @endif
                 <a href="/categories/2" target="_blank" class="btn btn-blue mb10">在线报名</a>
                 <a href="/locations_rent/search" target="_blank" class="btn btn-blue mb10">场地预约</a>
                 <div class="weixin-box">

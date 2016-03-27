@@ -8,7 +8,7 @@ class MessageController extends BaseController {
 
     public function __construct()
     {
-        $this->beforeFilter('worker');
+        $this->beforeFilter('worker', ['only' => ['store']]);
 
         $this->beforeFilter('csrf', ['only' => ['store']]);  
     }

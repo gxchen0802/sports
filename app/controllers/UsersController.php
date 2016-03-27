@@ -91,4 +91,9 @@ class UsersController extends Controller {
 
         return View::make('cms.users.list', $data);
     }
+
+    public function cms()
+    {
+        return Redirect::to('/trainings');
+    }
 }
