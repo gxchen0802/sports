@@ -6,7 +6,7 @@
         <!-- centre  -->
         <div class="centre mt20 clearfix bg-grey">
             <!-- cen-list -->
-            <div class="message-container i-list-box mt20">
+            <div class="message-container i-list-box">
                 <h3 class="title mb20"><span>留言板</span></h3>
                 <!-- 留言筛选 -->
 <!--                 <ul class="msg-bar mb10">

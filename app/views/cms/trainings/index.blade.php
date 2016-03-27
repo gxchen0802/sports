@@ -40,7 +40,7 @@
                   <td>{{ $training->score }}</td>
                   <td>
                     <a href="/trainings/{{ $training->id }}">
-                      <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="报名"></span>
                     </a>
                   @if(Session::get('user_role') == 'admin') 
                     <a href="/trainings/{{ $training->id }}/edit">

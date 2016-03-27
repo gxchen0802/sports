@@ -8,13 +8,13 @@
 
           <h2 class="sub-header">留言列表</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped table-hover table-condensed">
               <thead>
                 <tr>
-                  <th>留言内容</th>
-                  <th>留言人</th>
-                  <th>留言时间</th>
-                  <th>操作</th>
+                  <th width="70">留言内容</th>
+                  <th class="x-10">留言人</th>
+                  <th class="x-10">留言时间</th>
+                  <th class="x-10">操作</th>
                 </tr>
               </thead>
               <tbody>

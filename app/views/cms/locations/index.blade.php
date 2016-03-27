@@ -28,7 +28,7 @@
                   <td>{{ $location->seats }}</td>
                   <td>
                     <a href="/locations/{{ $location->id }}">
-                      <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="预约"></span>
                     </a>
                   @if(Session::get('user_role') == 'admin') 
                     <a href="/locations/{{ $location->id }}/edit">
