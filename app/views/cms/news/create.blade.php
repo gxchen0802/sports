@@ -12,6 +12,8 @@
 
         {{ Form::open(array('action' => array('NewsController@store'), 'class' => 'form-horizontal', 'files' => true)) }}
 
+            <input type="hidden" name="user_id" value="{{Session::get('user_id')}}">
+
             <div class="form-group">
               <label for="title" class="col-sm-2 control-label">标题</label>
               <div class="col-sm-6">

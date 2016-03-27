@@ -16,7 +16,12 @@ class NewsController extends BaseController {
 
     public function index()
     {
-        $data = ['news' => News::join('subcategories', 'news.subcategory_id', '=', 'subcategories.id')->join('categories', 'news.category_id', '=', 'categories.id')->select('news.*', 'subcategories.name as subcategory_name', 'categories.name as category_name')->where('news.status', 'active')->get()];
+        $sql = News::join('subcategories', 'news.subcategory_id', '=', 'subcategories.id')->join('categories', 'news.category_id', '=', 'categories.id')->select('news.*', 'subcategories.name as subcategory_name', 'categories.name as category_name')->where('news.status', 'active');
+
+        if (Session::get('user_role') == 'admin') $news = $sql->get();
+        else $news = $sql->where('news.user_id', Session::get('user_id'))->get();  // Teacher only can see their own articles
+
+        $data = ['news' => $news];
 
         return View::make('cms.news.index', $data); // return View('pages.about');
     }
@@ -73,6 +78,7 @@ class NewsController extends BaseController {
             $subcategory = Subcategories::find(Input::get('subcategory_id'));
 
             News::create([
+                'user_id'        => Input::get('user_id'),
                 'title'          => Input::get('title'),
                 'content'        => Input::get('content'),
                 'date'           => date('Y-m-d', strtotime(Input::get('date'))),
@@ -96,11 +102,13 @@ class NewsController extends BaseController {
 
     public function edit($id)
     {
+        $article = News::find($id);
+
+        if ($article->user_id != Session::get('user_id')) return Redirect::to("/logout");
+
         $subcategories = Subcategories::join('categories', 'categories.id', '=', 'subcategories.category_id')->select('subcategories.*', 'categories.name as category')->where('subcategories.status', 'active')->orderBy('categories.id')->orderBy('subcategories.id')->get();
 
         $trainings = Trainings::notDeleted()->notOver()->get();
-
-        $article = News::find($id);
 
         $data = ['subcategories' => $subcategories, 'article' => $article, 'trainings' => $trainings];
 
@@ -109,6 +117,10 @@ class NewsController extends BaseController {
 
     public function update($id)
     {
+        $article = News::find($id);
+
+        if ($article->user_id != Session::get('user_id')) return Redirect::to("/logout");
+
         $upload_document = $this->uploadDocument();
 
         if ($upload_document === -1) return Redirect::to("cms/news/create?error=文件过大！");
@@ -118,6 +130,7 @@ class NewsController extends BaseController {
             $subcategory = Subcategories::find(Input::get('subcategory_id'));
 
             News::where('id', $id)->update([
+                'user_id'        => Input::get('user_id'),
                 'title'          => Input::get('title'),
                 'content'        => Input::get('content'),
                 'date'           => date('Y-m-d', strtotime(Input::get('date'))),
