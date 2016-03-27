@@ -12,6 +12,29 @@
     @yield('extra_css')
 </head>
 <body>
+    <!-- topbar -->
+    <div class="topbar">
+        <div class="center">
+            <div class="l-title"><a href="http://www.sus.edu.cn/">上海体育学院</a></div>
+            <!-- 未登录  显示如下-->
+        @if ( ! Session::get('user_id'))
+            <div class="r-login">
+                <a href="/login">[登录]</a>
+                <span>|</span>
+                <a href="/login?a=regsiter">[注册]</a>
+            </div>
+        @else
+            <!-- 已登录 显示如下-->
+            <div class="r-login">
+                <span>您好：{{Session::get('user_name')}}</span>
+                <span>|</span>
+                <a href="/cms">[个人中心]</a>
+                <span>|</span>
+                <a href="/logout">[注销]</a>
+            </div>
+        @endif
+        </div>
+    </div>
     <div class="body">
         @include('pages.layouts.header')
 
