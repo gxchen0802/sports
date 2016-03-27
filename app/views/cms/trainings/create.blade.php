@@ -26,16 +26,16 @@
             <div class="form-group">
               <label for="date" class="col-sm-2 control-label">日期</label>
               <div class="col-sm-6">
-                <input type="date" class="form-control defTime" name="date" placeholder="日期">
+                <input type="text" class="form-control" name="date" placeholder="日期" id="STime">
               </div>
             </div> 
 
-            <div class="form-group">
+<!--             <div class="form-group">
               <label for="time" class="col-sm-2 control-label">时间</label>
               <div class="col-sm-6">
                 <input type="time" class="form-control" name="time" placeholder="时间">
               </div>
-            </div> 
+            </div>  -->
 
             <div class="form-group">
               {{Form::label('主讲人', '主讲人', array('class' => 'col-sm-2 control-label'))}}
@@ -80,4 +80,12 @@
 
           {{ Form::close() }}
 
+@stop
+
+@section('custom_js')
+<script type="text/javascript">
+    $(function() {
+        BsCommon.initDateTime($("#STime"),'yyyy-mm-dd hh:ii')
+    });
+</script>
 @stop
