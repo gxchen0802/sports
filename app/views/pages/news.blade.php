@@ -51,7 +51,6 @@
      -->
     <div id="signup-dialog">
         {{ Form::open(array('action' => array('TrainingsAttendeesController@ajaxStore', $record->training_id), 'id' => 'signup-form')) }}
-        <!-- <form id="signup-form" action="/api/trainings/{{$record->training_id}}/attendees" method="post"> -->
             <dl class="d-center">
                 <dt>请输入工号：</dt>
                 <dd>
@@ -63,7 +62,6 @@
                 <button type="button" id="btn-cancel" class="btn btn-cancel">取消</button>
             </div>
         {{ Form::close() }}
-        <!-- </form> -->
     </div>
     <!-- 报名弹出框 end -->
 @stop
