@@ -6,7 +6,7 @@ class SubcategoriesController extends BaseController {
 
     public function __construct()
     {
-        $this->beforeFilter('admin');
+        $this->beforeFilter('admin', ['except' => ['show']]);
         
         $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
     }

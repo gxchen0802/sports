@@ -6,8 +6,8 @@ class NewsController extends BaseController {
 
     public function __construct()
     {
-        $this->beforeFilter('worker');
-        
+        $this->beforeFilter('worker', ['except' => ['show']]);
+
         $this->beforeFilter('csrf', ['only' => ['store', 'update']]);   
 
         $this->current_worker_id = Session::get('user_name');
