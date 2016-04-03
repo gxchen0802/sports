@@ -2,6 +2,8 @@
 
 class NewsController extends BaseController {
 
+    const PER_PAGE = 20;
+
     public $current_worker_id;
 
     public function __construct()
@@ -18,10 +20,35 @@ class NewsController extends BaseController {
     {
         $sql = News::join('subcategories', 'news.subcategory_id', '=', 'subcategories.id')->join('categories', 'news.category_id', '=', 'categories.id')->select('news.*', 'subcategories.name as subcategory_name', 'categories.name as category_name')->where('news.status', 'active');
 
-        if (Session::get('user_role') == 'admin') $news = $sql->get();
-        else $news = $sql->where('news.user_id', Session::get('user_id'))->get();  // Teacher only can see their own articles
+        // Teacher only can see their own articles :
+        if (Session::get('user_role') !== 'admin') $sql = $sql->where('news.user_id', Session::get('user_id'));
 
-        $data = ['news' => $news];
+        $news = $sql->paginate(self::PER_PAGE);
+
+        $current_page = Input::get('page') ? (int)Input::get('page') : 1;
+
+        $total_pages = $news->getLastPage();
+
+        $total_count = $news->getTotal();
+
+        $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
+
+        $next_page = ($current_page + 1 > $total_pages) ? $total_pages : ($current_page + 1);
+
+        $start_index = $news->getFrom();
+
+        $end_index = $news->getTo();
+
+        $data = [
+            'news'          => $news,
+            'total_pages'   => $total_pages,
+            'total_count'   => $total_count,
+            'start_index'   => $start_index,
+            'end_index'     => $end_index,
+            'current_page'  => $current_page,
+            'previous_page' => $previous_page,
+            'next_page'     => $next_page,
+            ];
 
         return View::make('cms.news.index', $data); // return View('pages.about');
     }

@@ -7,18 +7,25 @@
     {{{ Session::get('message') }}}  </br>  
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <!-- <h1 class="page-header">列表</h1> -->
 
-          <h2 class="sub-header">搜索培训记录</h2>
-          <!-- <h3>搜索培训记录</h2> -->
+          <h2 class="sub-header">查询培训记录</h2>
 
-          {{ Form::open(array('action' => array('TrainingsAttendeesController@search'), 'class' => 'form-horizontal')) }}
+          {{ Form::open(array('action' => array('TrainingsAttendeesController@doSearch'), 'class' => 'form-horizontal')) }}
             <fieldset>
 
+            @if (Session::get('user_role') == 'admin')
               <div class="form-group">
                 <label for="worker_id" class="col-sm-2 control-label">工号</label>
                 <div class="col-sm-6">
-                  <input type="text" id="worker_id" name="worker_id" class="form-control" placeholder="工号" value="{{Session::get('user_name')}}" >
+                  <input type="text" id="worker_id" name="worker_id" class="form-control" placeholder="工号" value="" >
+                </div>
+              </div>
+            @endif
+
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">开始日期</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control defTime" name="start_date" placeholder="开始日期" value="{{date('Y-m-d')}}">
                 </div>
               </div>
 
@@ -43,7 +50,7 @@
             </fieldset>
           {{ Form::close() }}
 
-          <h2 class="sub-header">待审核培训</h2>
+          <h2 class="sub-header">培训记录</h2>
 
           <div class="table-responsive">
             <table class="table table-striped table-hover table-condensed">
@@ -55,7 +62,9 @@
                   <th class="x-10">培训日期</th>
                   <th class="x-10">工号</th>
                   <th class="x-5">状态</th>
+                @if(Session::get('user_role') == 'admin') 
                   <th class="x-20">操作</th>
+                @endif
                 </tr>
               </thead>
               <tbody>
@@ -77,7 +86,7 @@
                     ?>
                   </td>
                   <td>
-                    @if(Session::get('user_role') == 'admin') 
+                    @if(Session::get('user_role') == 'admin' && $record->status == 'auditing') 
                     <a href="/trainings_attendees/{{ $record->id }}/approve">
                       <span class="glyphicon glyphicon-ok" aria-hidden="true">签到</span>
                     </a>

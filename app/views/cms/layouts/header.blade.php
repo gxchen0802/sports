@@ -15,21 +15,22 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">在线报名 <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="/trainings">列表</a></li>
+                <li><a href="/trainings_attendees/search">记录</a></li>
               @if(Session::get('user_role') == 'admin') 
                 <li><a href="/trainings/create">创建</a></li>
+                <li><a href="/trainings_attendees">审核</a></li>
               @endif
-                <li><a href="/trainings_attendees">记录</a></li>
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">场地预约 <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="/locations">列表</a></li>
+                <li><a href="/locations_rent/search">查询</a></li>
               @if(Session::get('user_role') == 'admin') 
                 <li><a href="/locations/create">创建</a></li>
+                <li><a href="/locations_rent/audit">审核</a></li>
               @endif
-                <li role="separator" class="divider"></li>
-                <li><a href="/locations_rent/search">查询预约记录</a></li>
               </ul>
             </li>
           @if(Session::get('user_role') == 'admin') 
@@ -60,8 +61,12 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">留言板 <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="/cms/messages">全部留言</a></li>
                 <li><a href="/cms/messages/unreply">待回复留言</a></li>
+              @if(Session::get('user_role') == 'admin') 
+                <li><a href="/cms/messages">全部留言</a></li>
+              @else
+                <li><a href="/cms/messages">我回复过的留言</a></li>
+              @endif
               </ul>
             </li>
             <li class="dropdown">

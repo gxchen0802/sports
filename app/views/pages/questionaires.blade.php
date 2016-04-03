@@ -1,6 +1,7 @@
 @extends('pages.layouts.default')
 
 @section('content')
+
         <!-- 导航菜单 -->
         <div class="subnav mt20">
             <div>
@@ -10,7 +11,7 @@
         <!-- centre  -->
         <div class="centre mt20 clearfix">
             <div class="detail">
-                <h1 class="title  mb10">上海体育学院教师培训满意度调查问卷</h1>
+                <h1 class="title  mb10">{{isset($questionaire->title) ? $questionaire->title : ''}}</h1>
                 <p class="subtitel mb10">
                     <span>开始时间：{{isset($questionaire->start_time) ? $questionaire->start_time : ''}}</span>
                     <span>结束时间：{{isset($questionaire->end_time) ? $questionaire->end_time : ''}}</span>
@@ -56,12 +57,20 @@
                             </dl>
                         @endforeach
                     </div>
+
+                @if ($questionaire->start_time > date('Y-m-d'))
+                    <div class="d-btn">
+                        <!-- 已报名按钮，禁用了点击事件 -->
+                        <button type="submit" id="voteSubmit" class="btn btn-red mt30 btn-ok disabled" title="已提交问卷" disabled="">问卷调查投票尚未开始</button>
+                    </div>
+                @else
                     <div class="d-btn">
                         <!-- 立即报名按钮，调用AJAX报名 -->
                         <button type="submit" id="voteSubmit" class="btn btn-red mt30 btn-ok" title="提交问卷">提交问卷</button>
                         <!-- 已报名按钮，禁用了点击事件 -->
                         <!-- <button type="submit" id="voteSubmit" class="btn btn-red mt30 btn-ok disabled" title="已提交问卷" disabled="">已提交问卷</button> -->
                     </div>
+                @endif
                 {{ Form::close() }}
                  <!-- 可以正常提交问卷，示如上 -->
             @endif

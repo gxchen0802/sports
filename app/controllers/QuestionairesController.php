@@ -87,6 +87,8 @@ class QuestionairesController extends BaseController {
 
         $total_pages = $questionaires->getLastPage();
 
+        $total_count = $questionaires->getTotal();
+
         $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
 
         $next_page = ($current_page + 1 > $total_pages) ? $total_pages : ($current_page + 1);
@@ -98,6 +100,7 @@ class QuestionairesController extends BaseController {
         $data = [
             'questionaires' => $questionaires,
             'total_pages'   => $total_pages,
+            'total_count'   => $total_count,
             'start_index'   => $start_index,
             'end_index'     => $end_index,
             'current_page'  => $current_page,
@@ -127,6 +130,7 @@ class QuestionairesController extends BaseController {
         }
         elseif ($vote_history) 
         {
+            $data['questionaire']  = $questionaire;
             $data['already_voted'] = true;
 
             return View::make('pages.questionaires', $data);

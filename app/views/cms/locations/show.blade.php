@@ -10,7 +10,7 @@
 
           @include('cms.layouts.notice')
 
-          <h2 class="sub-header">查看场地 ({{ $location->name }}) </h2>
+          <h2 class="sub-header">{{ $location->name }} 已被租用的时间段：</h2>
 
           <div class="table-responsive">
             <table class="table table-striped">
@@ -19,11 +19,11 @@
                   <th>日期</th>
                   <th>开始时间</th>
                   <th>结束时间</th>
-                  <th>参加人数</th>
+<!--                   <th>参加人数</th>
                   <th>场地用途</th>
                   <th>租用部门</th>
                   <th>租用人</th>
-                  <th>备注</th>
+                  <th>备注</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -31,12 +31,12 @@
                 <tr>
                   <td>{{ $record->start_date }}</td>
                   <td>{{ $record->start_time }}</td>
-                  <td>{{ $record->end_time }}</td>
+                  <td>{{ $record->end_time }}</td><!-- 
                   <td>{{ $record->attendees }}</td>
                   <td>{{ $record->event }}</td>
                   <td>{{ $record->department }}</td>
                   <td>{{ $record->renter }}</td>
-                  <td>{{ $record->comment }}</td>
+                  <td>{{ $record->comment }}</td> -->
                 </tr>
                 @endforeach
               </tbody>
@@ -47,31 +47,26 @@
 
         {{ Form::open(array('action' => array('LocationsController@rent', $location->id), 'class' => 'form-horizontal')) }}
 
+            @if (Session::get('user_role') == 'admin')
             <div class="form-group">
-              <label for="worker_id" class="col-sm-2 control-label">工号（隐藏）</label>
+              <label for="worker_id" class="col-sm-2 control-label">工号</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" name="worker_id" placeholder="工号（隐藏）">
+                <input type="text" class="form-control" name="worker_id" placeholder="工号">
               </div>
             </div>
-
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">开始日期</label>
-              <div class="col-sm-6">
-                <input type="date" class="form-control" name="start_date" placeholder="开始日期">
-              </div>
-            </div>
+            @endif
 
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">开始时间</label>
               <div class="col-sm-6">
-                <input type="time" class="form-control" name="start_time" placeholder="开始时间">
+                <input type="text" class="form-control" name="start_time" placeholder="开始时间" id="STime">
               </div>
             </div>
 
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">结束时间</label>
               <div class="col-sm-6">
-                <input type="time" class="form-control" name="end_time" placeholder="结束时间">
+                <input type="text" class="form-control" name="end_time" placeholder="结束时间" id="ETime">
               </div>
             </div>
 
@@ -118,4 +113,12 @@
 
           {{ Form::close() }}
 
+@stop
+
+@section('custom_js')
+<script type="text/javascript">
+    $(function() {
+        BsCommon.initDoubleDateTime($("#STime"),$("#ETime"),'yyyy-mm-dd hh:ii');
+    });
+</script>
 @stop

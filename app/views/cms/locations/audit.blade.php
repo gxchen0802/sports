@@ -10,7 +10,7 @@
 
           @include('cms.layouts.notice')
           
-          <h2 class="sub-header">审核预约记录</h2>
+          <h2 class="sub-header">等待审核的预约</h2>
 
           <div class="table-responsive">
             <table class="table table-striped">

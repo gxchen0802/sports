@@ -74,11 +74,20 @@ class MessageController extends BaseController {
 
     public function indexCMS()
     {
-        $messages = Messages::notDeleted()->orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
+        $query = Messages::notDeleted()->orderBy('created_at', 'desc');
+
+        // Teachers can only see their own replies:
+        if (Session::get('user_role') !== 'admin') {
+            $query = $query->where('worker_id', Session::get('user_id'));
+        }
+
+        $messages = $query->paginate(self::PER_PAGE);
 
         $current_page = Input::get('page') ? (int)Input::get('page') : 1;
 
         $total_pages = $messages->getLastPage();
+
+        $total_count = $messages->getTotal();
 
         $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
 
@@ -91,6 +100,7 @@ class MessageController extends BaseController {
         $data = [
             'messages'       => $messages,
             'total_pages'    => $total_pages,
+            'total_count'    => $total_count,
             'start_index'    => $start_index,
             'end_index'      => $end_index,
             'current_page'   => $current_page,
@@ -108,6 +118,8 @@ class MessageController extends BaseController {
         $current_page = Input::get('page') ? (int)Input::get('page') : 1;
 
         $total_pages = $messages->getLastPage();
+        
+        $total_count = $messages->getTotal();
 
         $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
 
@@ -120,6 +132,7 @@ class MessageController extends BaseController {
         $data = [
             'messages'       => $messages,
             'total_pages'    => $total_pages,
+            'total_count'    => $total_count,
             'start_index'    => $start_index,
             'end_index'      => $end_index,
             'current_page'   => $current_page,
@@ -144,6 +157,7 @@ class MessageController extends BaseController {
         try 
         {
             Messages::where('id', $id)->update([
+                'worker_id'    => Session::get('user_id'),
                 'username'     => Input::get('username'),
                 'message'      => Input::get('message'),
                 'reply'        => Input::get('reply'),

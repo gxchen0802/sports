@@ -10,22 +10,24 @@
 
           @include('cms.layouts.notice')
 
-          <h2 class="sub-header">查询预约记录</h2>
+          <h2 class="sub-header">查询</h2>
 
         {{ Form::open(array('action' => array('LocationsController@search'), 'class' => 'form-horizontal')) }}
             <fieldset>
             
+            @if (Session::get('user_role') == 'admin')
               <div class="form-group">
                 <label for="worker_id" class="col-sm-2 control-label">工号</label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control" name="worker_id" placeholder="工号" value="{{Session::get('user_name')}}" <?php echo Session::get('user_role') == 'admin' ? '' : 'disabled="disabled"'?>>
+                  <input type="text" class="form-control" name="worker_id" placeholder="工号" value="" >
                 </div>
               </div>
-
+            @endif
+            
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">开始日期</label>
                 <div class="col-sm-6">
-                  <input type="date" class="form-control defTime" name="start_date" placeholder="开始日期">
+                  <input type="text" class="form-control defTime" name="start_date" placeholder="开始日期" value="{{date('Y-m-d')}}">
                 </div>
               </div>
 
@@ -79,7 +81,16 @@
                   <td>{{ $record->department }}</td>
                   <td>{{ $record->renter }}</td>
                   <td>{{ $record->comment }}</td>
-                  <td>{{ $record->status }}</td>
+                  <td>
+                  <?php
+                    if ($record->status == 'auditing')
+                      echo '<span class="label label-warning">审核中</span>';
+                    elseif ($record->status == 'approved') 
+                      echo '<span class="label label-success">已批准</span>';
+                    elseif ($record->status == 'disapproved') 
+                      echo '<span class="label label-danger">未通过</span>';
+                  ?>
+                  </td>
                 </tr>
                 @endforeach
               @endif

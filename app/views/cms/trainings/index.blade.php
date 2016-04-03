@@ -57,4 +57,29 @@
             </table>
           </div>
 
+
+          <div class="assistant row">
+              <div class="total">
+                  <span class="text-primary arial">{{$start_index}}-{{$end_index}}</span>
+                  <span> / 共</span>
+                  <span class="text-primary arial">{{$total_count}}</span>
+                  <span>条</span>
+              </div>
+              <ul class="pagination">
+                  <li>
+                      <a href="/trainings?page={{ $previous_page }}" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                      </a>
+                  </li>
+                  @for ($page = 1; $page <= $total_pages; $page++)
+                    <li {{ $page == $current_page ? 'class="active"' : ''}}><a href="/trainings?page={{ $page }}">{{$page}}</a></li>
+                  @endfor
+
+                  <li>
+                      <a href="/trainings?page={{ $next_page }}" data-page="2" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
 @stop

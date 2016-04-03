@@ -46,8 +46,32 @@
             </table>
           </div>
 
+          <div class="assistant row">
+              <div class="total">
+                  <span class="text-primary arial">{{$start_index}}-{{$end_index}}</span>
+                  <span> / 共</span>
+                  <span class="text-primary arial">{{$total_count}}</span>
+                  <span>条</span>
+              </div>
+              <ul class="pagination">
+                  <li>
+                      <a href="/cms/messages?page={{ $previous_page }}" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                      </a>
+                  </li>
+                  @for ($page = 1; $page <= $total_pages; $page++)
+                    <li {{ $page == $current_page ? 'class="active"' : ''}}><a href="/cms/messages?page={{ $page }}">{{$page}}</a></li>
+                  @endfor
 
-          <div class="pagination mt30">
+                  <li>
+                      <a href="/cms/messages?page={{ $next_page }}" data-page="2" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+
+     <!--      <div class="pagination mt30">
               <p>
                   <a href="/cms/messages">首页</a>
                   <a href="/cms/messages?page={{ $previous_page }}">上一页</a>
@@ -60,6 +84,6 @@
                   <a href="/cms/messages?page={{ $total_pages }}">末页</a>
               </p>
               <span>{{$start_index}}-{{$end_index}}条，共{{$total_pages}}页</span>
-          </div>
+          </div> -->
 
 @stop

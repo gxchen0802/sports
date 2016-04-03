@@ -2,6 +2,7 @@
 
 class LocationsController extends Controller {
 
+    const PER_PAGE = 20;
 
     public function __construct()
     {
@@ -13,9 +14,32 @@ class LocationsController extends Controller {
 
     public function index()
     {
-        $locations = Locations::notDeleted()->get();
+        $locations = Locations::notDeleted()->paginate(self::PER_PAGE);
 
-        $data = ['locations' => $locations];
+        $current_page = Input::get('page') ? (int)Input::get('page') : 1;
+
+        $total_pages = $locations->getLastPage();
+
+        $total_count = $locations->getTotal();
+
+        $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
+
+        $next_page = ($current_page + 1 > $total_pages) ? $total_pages : ($current_page + 1);
+
+        $start_index = $locations->getFrom();
+
+        $end_index = $locations->getTo();
+
+        $data = [
+            'locations'     => $locations,
+            'total_pages'   => $total_pages,
+            'total_count'   => $total_count,
+            'start_index'   => $start_index,
+            'end_index'     => $end_index,
+            'current_page'  => $current_page,
+            'previous_page' => $previous_page,
+            'next_page'     => $next_page,
+            ];
 
         return View::make('cms.locations.index', $data);
     }
@@ -108,14 +132,29 @@ class LocationsController extends Controller {
     public function search()
     {
         $locations = Locations::notDeleted()->lists('name', 'id');
-     
+
+        // Only search future if not specified:
+        if (Input::get('start_date')) {
+            $start_date = Input::get('start_date');
+        } else {
+            $start_date = date('Y-m-d');
+        }
+
         $data = [];
 
-        $query = LocationsRent::join('locations', 'locations_rent.location_id', '=', 'locations.id')->select('locations_rent.*', 'locations.name')->where('locations_rent.worker_id', Input::get('worker_id'));
+        $query = LocationsRent::join('locations', 'locations_rent.location_id', '=', 'locations.id')->select('locations_rent.*', 'locations.name')->where('locations_rent.start_date', '>=', $start_date);
+     
+        // Admin can search everyone or no worker_id
+        if (Session::get('user_role') == 'admin') {
+            if (Input::get('worker_id')) {  // if no worker_id is passed, ignore worker_in where condition:
+                $query = $query->where('locations_rent.worker_id', Input::get('worker_id'));
+            }
+        // Teacher can only search their own:
+        } else { 
+            $query = $query->where('locations_rent.worker_id', Session::get('user_name'));
+        }
 
-        if (Input::get('start_date')) $query->where('locations_rent.start_date', Input::get('start_date'));
-
-        if (Input::get('location_id')) $query->where('locations.id', Input::get('location_id'));
+        if (Input::get('location_id')) $query = $query->where('locations.id', Input::get('location_id'));
 
         $records = $query->get();
 
@@ -158,14 +197,21 @@ class LocationsController extends Controller {
 
     public function rent($location_id)
     {
+        // Teacher can only search their own:
+        if (Session::get('user_role') == 'admin') {
+            $worker_id = Input::get('worker_id');
+        } else {
+            $worker_id = Session::get('user_name');
+        }
+
         try 
         {
             LocationsRent::create([
                 'location_id' => $location_id, 
-                'worker_id'   => Input::get('worker_id'),
-                'start_date'  => Input::get('start_date'),
-                'start_time'  => Input::get('start_time'),
-                'end_time'    => Input::get('end_time'),
+                'worker_id'   => $worker_id,
+                'start_date'  => date('Y-m-d', strtotime(Input::get('start_time'))),
+                'start_time'  => date('H:i:s', strtotime(Input::get('start_time'))),
+                'end_time'    => date('H:i:s', strtotime(Input::get('end_time'))),
                 'attendees'   => (int)Input::get('attendees'),
                 'department'  => Input::get('department'),
                 'renter'      => Input::get('renter'),

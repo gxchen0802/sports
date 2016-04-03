@@ -17,7 +17,7 @@
 
           @include('cms.layouts.notice')
 
-          <h2 class="sub-header">查看培训</h2>
+          <h2 class="sub-header">培训详情</h2>
 
           <div class="table-responsive">
             <table class="table table-striped">
@@ -50,20 +50,23 @@
             </table>
           </div>
 
-          <h2 class="sub-header">培训报名</h2>
+          <!-- <h2 class="sub-header">培训报名</h2> -->
 
         {{ Form::open(array('action' => array('TrainingsAttendeesController@store', $training->id), 'class' => 'form-horizontal')) }}
+
+          @if ( ! $history)
             <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">工号</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="worker_id" placeholder="工号" value="{{Session::get('user_name')}}" >
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">点击报名</button>
               </div>
             </div>
+          @else
             <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">提交</button>
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary disabled">已经申请过该培训</button>
               </div>
             </div>
+          @endif
           {{ Form::close() }}
 
 @stop

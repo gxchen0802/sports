@@ -34,18 +34,17 @@ Route::put('trainings', 'TrainingsController@update');
 
 ## Attend training:
 Route::get('trainings_attendees', 'TrainingsAttendeesController@index');
+Route::get('trainings_attendees/search', 'TrainingsAttendeesController@search');
 Route::get('trainings_attendees/list', 'TrainingsAttendeesController@index');
 Route::post('trainings/{training_id}/attendees', 'TrainingsAttendeesController@store');
 Route::post('api/trainings/{training_id}/attendees', 'TrainingsAttendeesController@ajaxStore');  // This is for "news" page's ajax request
-Route::post('trainings_attendees/search', 'TrainingsAttendeesController@search');
+Route::post('trainings_attendees/search', 'TrainingsAttendeesController@doSearch');
 
 Route::get('trainings_attendees/{id}/approve', 'TrainingsAttendeesController@approve');
 Route::get('trainings_attendees/{id}/disapprove', 'TrainingsAttendeesController@disapprove');
 
 ## Search:
 Route::get('search', 'SearchController@show');
-// Route::get('search/attendees/worker_id/{worker_id}', 'SearchController@show');
-// Route::post('search/attendees/worker_id/{worker_id}', 'SearchController@attendees');
 
 ## Locations:
 Route::get('locations', 'LocationsController@index');

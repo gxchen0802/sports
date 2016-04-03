@@ -2,7 +2,7 @@
 
 class TrainingsController extends Controller {
 
-    // protected $layout = 'layouts.default';
+    const PER_PAGE = 20;
 
     public function __construct()
     {
@@ -13,7 +13,32 @@ class TrainingsController extends Controller {
 
     public function index()
     {
-        $data = ['trainings' => Trainings::notDeleted()->notOver()->get()];
+        $trainings = Trainings::notDeleted()->notOver()->paginate(self::PER_PAGE);
+
+        $current_page = Input::get('page') ? (int)Input::get('page') : 1;
+
+        $total_pages = $trainings->getLastPage();
+
+        $total_count = $trainings->getTotal();
+
+        $previous_page = ($current_page - 1 <= 0) ? 1 : ($current_page - 1);
+
+        $next_page = ($current_page + 1 > $total_pages) ? $total_pages : ($current_page + 1);
+
+        $start_index = $trainings->getFrom();
+
+        $end_index = $trainings->getTo();
+
+        $data = [
+            'trainings'     => $trainings,
+            'total_pages'   => $total_pages,
+            'total_count'   => $total_count,
+            'start_index'   => $start_index,
+            'end_index'     => $end_index,
+            'current_page'  => $current_page,
+            'previous_page' => $previous_page,
+            'next_page'     => $next_page,
+            ];
 
         return View::make('cms.trainings.index', $data); // return View('pages.about');
     }
@@ -90,14 +115,15 @@ class TrainingsController extends Controller {
 
     public function show($id)
     {
+        $worker_id = Session::get('user_name');
+
         $training = Trainings::findOrFail($id);
 
-        $data = ['training' => $training];
+        $history = TrainingsAttendees::where('training_id', $id)->where('worker_id', $worker_id)->first();
+
+        $data = ['training' => $training, 'history' => $history];
 
         return View::make('cms.trainings.show', $data); // return View('pages.about');
-        
-        // $this->layout->content = View::make('pages.about');
-        // echo $id;
     }
 
     public function destroy($id)
