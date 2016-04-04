@@ -21,7 +21,7 @@
 ?>
                     <ul class="hide">
                         @foreach($education as $e)
-                            <li><a href="{{$e->link}}" target="_blank">{{$f->name}}</a></li>
+                            <li><a href="{{$e->link}}" target="_blank">{{$e->name}}</a></li>
                         @endforeach
                     </ul>
                 </div>

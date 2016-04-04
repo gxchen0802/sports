@@ -185,7 +185,7 @@ class TrainingsAttendeesController extends Controller {
             $data['records']   = [];
         }
 
-        $trainings = Trainings::notDeleted()->lists('title', 'id');
+        $trainings = Trainings::notDeleted()->notOver()->lists('title', 'id');
 
         $data['trainings'] = $trainings;
 
