@@ -44,7 +44,7 @@
     @include('pages.layouts.footer')
 
     <!-- 微信客户端浮层 -->
-    <div class="erwei hide"><img src="http://placehold.it/120x120&text=Pic001-120*120" /></div>
+    <div class="erwei hide"><img src="/images/erweima.jpg" /></div>
     <!-- 右侧浮层 -->
     <div class="r-fixed">
         @if ( ! Session::get('user_id'))
